@@ -210,14 +210,21 @@ body {
     background: transparent !important;
 }
 
-/* 代码文字（不碰 background，让内层自己管） */
+/* 代码文字（统一左侧留白） */
 .post-content pre code,
 .post-content .highlight code,
 .post-content .chroma code {
-    padding: 0;
+    padding: 0 0 0 6px;
     font-weight: 400;
     color: #24292f;
     font-size: inherit;
+}
+
+/* chroma 最内层 span 也加左留白，让文字不贴边 */
+.post-content .chroma .line,
+.post-content .chroma .cl {
+    padding-left: 6px;
+    display: inline-block;
 }
 
 /* 白天 */
