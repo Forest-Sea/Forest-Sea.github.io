@@ -5,6 +5,7 @@
     --accent: #4f8ef7;
     --accent-hover: #3a7be8;
     --radius: 10px;
+    --radius-sm: 6px;
     --shadow: 0 2px 12px rgba(0,0,0,.06);
     --shadow-hover: 0 6px 24px rgba(0,0,0,.10);
     --font: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -163,25 +164,31 @@ body {
     border-bottom-color: var(--accent);
 }
 
-/* ===== 代码块 ===== */
-.post-content pre {
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    font-size: .9rem;
-    line-height: 1.6;
-    box-shadow: var(--shadow);
-}
-
+/* ===== 行内代码 ===== */
 .post-content code {
     font-size: .88em;
     background: #f0f0f5;
+    color: #d63384;
     padding: 2px 7px;
     border-radius: 4px;
+    font-weight: 500;
+}
+
+/* ===== 代码块——小圆角，不遮挡内容 ===== */
+.post-content pre {
+    border-radius: var(--radius-sm);
+    padding: 18px 22px;
+    font-size: .88rem;
+    line-height: 1.65;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
 }
 
 .post-content pre code {
     background: none;
+    color: inherit;
     padding: 0;
+    font-weight: 400;
 }
 
 /* ===== 表格 ===== */
@@ -190,7 +197,7 @@ body {
     border-collapse: collapse;
     margin: 1.5em 0;
     font-size: .95rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     overflow: hidden;
     box-shadow: var(--shadow);
 }
@@ -216,7 +223,7 @@ body {
     border-left: 4px solid var(--accent);
     background: #f8faff;
     padding: 14px 20px;
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     margin: 1.5em 0;
     color: #555;
     font-style: italic;
@@ -306,47 +313,160 @@ body {
     outline: none;
 }
 
-/* ===== 暗色模式 ===== */
+/* ==============================
+   暗色模式——全覆盖
+   ============================== */
+[data-theme="dark"] {
+    --code-bg: rgba(255,255,255,.10);
+    --code-text: #f0a0c0;
+}
+
 [data-theme="dark"] .header {
-    background: rgba(29,30,32,.9);
+    background: rgba(29,30,32,.92);
     border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
+[data-theme="dark"] .logo a {
+    color: #e0e0e0;
+}
+
 [data-theme="dark"] .home-info {
-    background: linear-gradient(135deg, #1e2030 0%, #252840 100%);
+    background: linear-gradient(135deg, #1a1d2e 0%, #222640 100%);
 }
 
 [data-theme="dark"] .home-info .entry-header h1 {
-    color: #e0e0e0;
+    color: #e8e8e8;
+}
+
+[data-theme="dark"] .home-info .entry-content {
+    color: #aaa;
 }
 
 [data-theme="dark"] .post-entry,
 [data-theme="dark"] .first-entry {
     background: var(--entry);
-    border-color: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.05);
+}
+
+/* 卡片标题 */
+[data-theme="dark"] .entry-header h2 a {
+    color: #d8d8d8;
+}
+
+[data-theme="dark"] .entry-header h2 a:hover {
+    color: var(--accent);
+}
+
+/* 卡片摘要文字 */
+[data-theme="dark"] .entry-content {
+    color: #a0a0a8;
+}
+
+/* 卡片元信息（日期、阅读时间等） */
+[data-theme="dark"] .entry-footer {
+    color: #7a7a85;
+}
+
+/* 文章正文 */
+[data-theme="dark"] .post-content {
+    color: #c8c8d0;
+}
+
+[data-theme="dark"] .post-content h1,
+[data-theme="dark"] .post-content h2,
+[data-theme="dark"] .post-content h3,
+[data-theme="dark"] .post-content h4 {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .post-content h2 {
+    border-bottom-color: rgba(255,255,255,.1);
+}
+
+/* 行内代码——暗色模式 */
+[data-theme="dark"] .post-content code {
+    background: rgba(255,255,255,.10);
+    color: #f0a0c0;
+}
+
+[data-theme="dark"] .post-content pre {
+    background: #1a1a24;
+}
+
+[data-theme="dark"] .post-content pre code {
+    background: none;
+    color: #c8c8d0;
+}
+
+[data-theme="dark"] .post-content a {
+    color: #6aa8ff;
+    border-bottom-color: rgba(106,168,255,.25);
+}
+
+[data-theme="dark"] .post-content a:hover {
+    border-bottom-color: #6aa8ff;
 }
 
 [data-theme="dark"] .post-content blockquote {
     background: rgba(79,142,247,.08);
+    color: #a0a0b0;
 }
 
-[data-theme="dark"] .post-content code {
-    background: rgba(255,255,255,.08);
+[data-theme="dark"] .post-content table {
+    background: var(--entry);
+}
+
+[data-theme="dark"] .post-content th {
+    background: rgba(79,142,247,.12);
+    color: #d0d0d8;
+}
+
+[data-theme="dark"] .post-content td {
+    border-bottom-color: rgba(255,255,255,.06);
+    color: #b8b8c0;
 }
 
 [data-theme="dark"] .post-tags a,
 [data-theme="dark"] .terms-tags a {
     background: rgba(79,142,247,.15);
+    color: #8ab8ff;
 }
 
-[data-theme="dark"] .post-content th {
-    background: rgba(79,142,247,.15);
+[data-theme="dark"] .post-tags a:hover,
+[data-theme="dark"] .terms-tags a:hover {
+    background: var(--accent);
+    color: #fff;
 }
 
+/* 归档页 */
+[data-theme="dark"] .archive-entry {
+    border-bottom-color: rgba(255,255,255,.06);
+}
+
+/* 页脚 */
+[data-theme="dark"] .footer {
+    color: #6a6a78;
+    border-top-color: rgba(255,255,255,.06);
+}
+
+/* 搜索框 */
 [data-theme="dark"] #searchbox input {
     background: var(--entry);
-    border-color: rgba(255,255,255,.1);
-    color: #ddd;
+    border-color: rgba(255,255,255,.10);
+    color: #d0d0d0;
+}
+
+[data-theme="dark"] #searchbox input::placeholder {
+    color: #6a6a78;
+}
+
+/* 页面描述文字 */
+[data-theme="dark"] .page-header h1 {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .post-description {
+    color: #999;
 }
 
 /* ===== 响应式 ===== */
