@@ -8,6 +8,7 @@ buildFuture = true
 [markup]
   [markup.highlight]
     noclasses = false
+    style = "github"
 
 [pagination]
   pagerSize = 10
@@ -32,7 +33,7 @@ buildFuture = true
 
 [[menu.main]]
   identifier = "archives"
-  name = "博客文章"
+  name = "文章"
   url = "/archives/"
   weight = 10
 

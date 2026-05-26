@@ -180,15 +180,12 @@ body {
     padding: 18px 22px;
     font-size: .88rem;
     line-height: 1.65;
-    box-shadow: none;
     overflow-x: auto;
-    background: #f5f5f8;
-    border: 1px solid #e8e8ec;
+    background: #f8f8fa;
 }
 
 .post-content pre code {
     background: none;
-    color: #333;
     padding: 0;
     font-weight: 400;
 }
@@ -371,11 +368,9 @@ html[data-theme="dark"] .post-content code {
 /* 代码块——暗 */
 html[data-theme="dark"] .post-content pre {
     background: #1a1a24;
-    border-color: #2a2a32;
 }
 html[data-theme="dark"] .post-content pre code {
     background: none;
-    color: #c0c0c8;
 }
 
 /* 链接——暗 */
@@ -434,11 +429,6 @@ html[data-theme="dark"] #searchbox input::placeholder { color: #6a6a75; }
 html[data-theme="dark"] .page-header h1 { color: #e0e0e0; }
 html[data-theme="dark"] .post-description { color: #999; }
 
-/* 深色代码高亮补丁——PaperMod chroma 暗色 */
-html[data-theme="dark"] .chroma {
-    color: #c0c0c8;
-    background: #1a1a24;
-}
 
 /* ===== 响应式 ===== */
 @media (max-width: 768px) {
