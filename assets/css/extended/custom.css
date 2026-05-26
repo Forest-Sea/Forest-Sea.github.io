@@ -314,22 +314,28 @@ body {
 }
 
 /* ==============================
-   暗色模式——全覆盖
+   暗色模式——统一改 PaperMod 变量
    ============================== */
 [data-theme="dark"] {
-    --code-bg: rgba(255,255,255,.10);
-    --code-text: #f0a0c0;
+    /* 核心：把所有主题变量改成完全不透明的实色 */
+    --primary: #d4d4d8;
+    --secondary: #a0a0a8;
+    --tertiary: #6a6a75;
+    --content: #c8c8d0;
+    --border: #333;
 }
 
+/* 导航栏毛玻璃 */
 [data-theme="dark"] .header {
-    background: rgba(29,30,32,.92);
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    background: rgba(24,25,28,.92);
+    border-bottom: 1px solid #2a2a30;
 }
 
 [data-theme="dark"] .logo a {
     color: #e0e0e0;
 }
 
+/* 首页欢迎区 */
 [data-theme="dark"] .home-info {
     background: linear-gradient(135deg, #1a1d2e 0%, #222640 100%);
 }
@@ -339,32 +345,22 @@ body {
 }
 
 [data-theme="dark"] .home-info .entry-content {
-    color: #aaa;
+    color: #b0b0b8;
 }
 
+/* 卡片 */
 [data-theme="dark"] .post-entry,
 [data-theme="dark"] .first-entry {
-    background: var(--entry);
-    border-color: rgba(255,255,255,.05);
+    border-color: #2a2a30;
 }
 
 /* 卡片标题 */
 [data-theme="dark"] .entry-header h2 a {
-    color: #d8d8d8;
+    color: #d8d8dc;
 }
 
 [data-theme="dark"] .entry-header h2 a:hover {
     color: var(--accent);
-}
-
-/* 卡片摘要文字 */
-[data-theme="dark"] .entry-content {
-    color: #a0a0a8;
-}
-
-/* 卡片元信息（日期、阅读时间等） */
-[data-theme="dark"] .entry-footer {
-    color: #7a7a85;
 }
 
 /* 文章正文 */
@@ -376,19 +372,20 @@ body {
 [data-theme="dark"] .post-content h2,
 [data-theme="dark"] .post-content h3,
 [data-theme="dark"] .post-content h4 {
-    color: #e0e0e0;
+    color: #e0e0e4;
 }
 
 [data-theme="dark"] .post-content h2 {
-    border-bottom-color: rgba(255,255,255,.1);
+    border-bottom-color: #2a2a30;
 }
 
-/* 行内代码——暗色模式 */
+/* 行内代码 */
 [data-theme="dark"] .post-content code {
-    background: rgba(255,255,255,.10);
+    background: #2a2a35;
     color: #f0a0c0;
 }
 
+/* 代码块 */
 [data-theme="dark"] .post-content pre {
     background: #1a1a24;
 }
@@ -398,34 +395,34 @@ body {
     color: #c8c8d0;
 }
 
+/* 链接 */
 [data-theme="dark"] .post-content a {
-    color: #6aa8ff;
-    border-bottom-color: rgba(106,168,255,.25);
+    color: #7ab4ff;
+    border-bottom-color: rgba(122,180,255,.3);
 }
 
 [data-theme="dark"] .post-content a:hover {
-    border-bottom-color: #6aa8ff;
+    border-bottom-color: #7ab4ff;
 }
 
+/* 引用块 */
 [data-theme="dark"] .post-content blockquote {
     background: rgba(79,142,247,.08);
-    color: #a0a0b0;
+    color: #b0b0b8;
 }
 
-[data-theme="dark"] .post-content table {
-    background: var(--entry);
-}
-
+/* 表格 */
 [data-theme="dark"] .post-content th {
     background: rgba(79,142,247,.12);
     color: #d0d0d8;
 }
 
 [data-theme="dark"] .post-content td {
-    border-bottom-color: rgba(255,255,255,.06);
+    border-bottom-color: #2a2a30;
     color: #b8b8c0;
 }
 
+/* 标签 */
 [data-theme="dark"] .post-tags a,
 [data-theme="dark"] .terms-tags a {
     background: rgba(79,142,247,.15);
@@ -438,29 +435,29 @@ body {
     color: #fff;
 }
 
-/* 归档页 */
+/* 归档 */
 [data-theme="dark"] .archive-entry {
-    border-bottom-color: rgba(255,255,255,.06);
+    border-bottom-color: #2a2a30;
 }
 
 /* 页脚 */
 [data-theme="dark"] .footer {
-    color: #6a6a78;
-    border-top-color: rgba(255,255,255,.06);
+    color: #6a6a75;
+    border-top-color: #2a2a30;
 }
 
-/* 搜索框 */
+/* 搜索 */
 [data-theme="dark"] #searchbox input {
     background: var(--entry);
-    border-color: rgba(255,255,255,.10);
+    border-color: #333;
     color: #d0d0d0;
 }
 
 [data-theme="dark"] #searchbox input::placeholder {
-    color: #6a6a78;
+    color: #6a6a75;
 }
 
-/* 页面描述文字 */
+/* 页面描述 */
 [data-theme="dark"] .page-header h1 {
     color: #e0e0e0;
 }
