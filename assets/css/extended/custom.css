@@ -183,32 +183,34 @@ body {
     font-size: .88rem;
     line-height: 1.65;
     overflow-x: auto;
-    background: #eeeff2;
-    border: 1px solid #dcdde2;
+    background: #e8eaef;
+    border: 1px solid #d5d7dd;
     margin: 1em 0;
 }
 
-/* 内层——pre 里的 code 标签，管所有情况（有/无 chroma） */
+/* 内层——pre>code 或 chroma，尖角，比外层亮 */
 .post-content .highlight > code,
 .post-content .highlight > pre > code,
 .post-content pre > code,
 .post-content .chroma {
     display: block;
-    border-radius: 2px !important;
-    background: #f8f8fa;
+    border-radius: 0 !important;
+    background: #fafafc !important;
     padding: 0;
 }
 
-/* chroma 内部 span 尖角 */
-.post-content .chroma span {
+/* chroma 内部 span 全尖角 */
+.post-content .chroma span,
+.post-content .chroma span::before,
+.post-content .chroma span::after,
+.post-content pre span,
+.post-content pre span::before,
+.post-content pre span::after {
     border-radius: 0 !important;
-}
-.post-content .highlight span,
-.post-content pre span {
-    border-radius: 0 !important;
+    background: transparent !important;
 }
 
-/* 代码文字 */
+/* 代码文字（不碰 background，让内层自己管） */
 .post-content pre code,
 .post-content .highlight code,
 .post-content .chroma code {
@@ -216,19 +218,18 @@ body {
     font-weight: 400;
     color: #24292f;
     font-size: inherit;
-    background: transparent !important;
 }
 
 /* 白天 */
 html:not([data-theme="dark"]) .post-content .highlight,
 html:not([data-theme="dark"]) .post-content pre {
-    background: #eeeff2 !important;
-    border-color: #dcdde2 !important;
+    background: #e8eaef !important;
+    border-color: #d5d7dd !important;
 }
 html:not([data-theme="dark"]) .post-content pre > code,
 html:not([data-theme="dark"]) .post-content .highlight > code,
 html:not([data-theme="dark"]) .post-content .chroma {
-    background: #f8f8fa !important;
+    background: #fafafc !important;
 }
 html:not([data-theme="dark"]) .post-content pre code,
 html:not([data-theme="dark"]) .post-content .highlight code {
@@ -413,13 +414,13 @@ html[data-theme="dark"] .post-content code {
 /* 代码块——暗 */
 html[data-theme="dark"] .post-content .highlight,
 html[data-theme="dark"] .post-content pre {
-    background: #14141a;
-    border-color: #2a2a35;
+    background: #111117;
+    border-color: #282832;
 }
 html[data-theme="dark"] .post-content pre > code,
 html[data-theme="dark"] .post-content .highlight > code,
 html[data-theme="dark"] .post-content .chroma {
-    background: #1a1a22;
+    background: #191922 !important;
 }
 html[data-theme="dark"] .post-content pre code,
 html[data-theme="dark"] .post-content .highlight code {
