@@ -174,9 +174,11 @@ body {
     font-weight: 500;
 }
 
-/* ===== 代码块 ===== */
+/* ===== 代码块（统一所有类型） ===== */
 .post-content .highlight,
-.post-content pre {
+.post-content pre,
+.post-content div.highlight,
+.post-content div.chroma {
     border-radius: var(--radius-sm);
     padding: 16px 20px;
     font-size: .88rem;
@@ -184,32 +186,37 @@ body {
     overflow-x: auto;
     background: #f6f8fa;
     border: 1px solid #d8dee4;
+    margin: 1em 0;
 }
 
-/* 内部元素全部透明背景，不抢戏 */
-.post-content .highlight .chroma,
-.post-content pre .chroma,
-.post-content .highlight code,
-.post-content pre code,
-.post-content .highlight span,
-.post-content pre span {
+/* 内部全部透明，不抢戏 */
+.post-content .highlight *,
+.post-content pre *,
+.post-content .chroma * {
     background: transparent !important;
 }
 
+/* 代码文字 */
 .post-content .highlight code,
-.post-content pre code {
+.post-content pre code,
+.post-content .chroma code,
+.post-content code[class*="language"] {
     padding: 0;
     font-weight: 400;
     color: #24292f;
+    font-size: inherit;
 }
 
 /* 白天 */
 html:not([data-theme="dark"]) .post-content .highlight,
-html:not([data-theme="dark"]) .post-content pre {
+html:not([data-theme="dark"]) .post-content pre,
+html:not([data-theme="dark"]) .post-content .chroma {
     background: #f6f8fa !important;
+    border-color: #d8dee4 !important;
 }
+html:not([data-theme="dark"]) .post-content .highlight code,
 html:not([data-theme="dark"]) .post-content pre code,
-html:not([data-theme="dark"]) .post-content .highlight code {
+html:not([data-theme="dark"]) .post-content .chroma code {
     color: #24292f !important;
 }
 
@@ -388,14 +395,16 @@ html[data-theme="dark"] .post-content code {
     color: #f0a0c0;
 }
 
-/* 代码块——暗 */
+/* 代码块——暗（统一） */
 html[data-theme="dark"] .post-content .highlight,
-html[data-theme="dark"] .post-content pre {
+html[data-theme="dark"] .post-content pre,
+html[data-theme="dark"] .post-content .chroma {
     background: #16161e;
     border-color: #2a2a35;
 }
 html[data-theme="dark"] .post-content .highlight code,
-html[data-theme="dark"] .post-content pre code {
+html[data-theme="dark"] .post-content pre code,
+html[data-theme="dark"] .post-content .chroma code {
     color: #c9d1d9;
 }
 
