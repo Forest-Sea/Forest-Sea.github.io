@@ -3,6 +3,8 @@ locale = 'zh-cn'
 title = '我的博客'
 theme = 'PaperMod'
 
+buildFuture = true
+
 [pagination]
   pagerSize = 10
 
