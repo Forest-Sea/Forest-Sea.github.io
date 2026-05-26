@@ -174,7 +174,7 @@ body {
     font-weight: 500;
 }
 
-/* ===== 代码块（统一所有类型） ===== */
+/* ===== 代码块（外层） ===== */
 .post-content .highlight,
 .post-content pre,
 .post-content div.highlight,
@@ -184,23 +184,29 @@ body {
     font-size: .88rem;
     line-height: 1.65;
     overflow-x: auto;
-    background: #f3f3f6;
-    border: 1px solid #e0e0e4;
+    background: #eeeff2;
+    border: 1px solid #dcdde2;
     margin: 1em 0;
 }
 
-/* 内部尖角+透明背景（全部位都覆盖） */
-.post-content .highlight *,
-.post-content .highlight *::before,
-.post-content .highlight *::after,
-.post-content pre *,
-.post-content pre *::before,
-.post-content pre *::after,
-.post-content .chroma *,
-.post-content .chroma *::before,
-.post-content .chroma *::after {
+/* 内层 chroma——尖角、稍亮，和外层有区分 */
+.post-content .highlight .chroma,
+.post-content pre .chroma,
+.post-content .chroma {
+    border-radius: 2px !important;
+    background: #f8f8fa;
+    padding: 0;
+}
+
+/* 尖角覆盖其余子元素 */
+.post-content .highlight span,
+.post-content pre span,
+.post-content .chroma span,
+.post-content .highlight span::before,
+.post-content .highlight span::after,
+.post-content pre span::before,
+.post-content pre span::after {
     border-radius: 0 !important;
-    background: transparent !important;
 }
 
 /* 代码文字 */
@@ -211,14 +217,19 @@ body {
     font-weight: 400;
     color: #24292f;
     font-size: inherit;
+    background: transparent !important;
 }
 
 /* 白天 */
 html:not([data-theme="dark"]) .post-content .highlight,
 html:not([data-theme="dark"]) .post-content pre,
 html:not([data-theme="dark"]) .post-content .chroma {
-    background: #f3f3f6 !important;
-    border-color: #e0e0e4 !important;
+    background: #eeeff2 !important;
+    border-color: #dcdde2 !important;
+}
+html:not([data-theme="dark"]) .post-content .highlight .chroma,
+html:not([data-theme="dark"]) .post-content pre .chroma {
+    background: #f8f8fa !important;
 }
 html:not([data-theme="dark"]) .post-content .highlight code,
 html:not([data-theme="dark"]) .post-content pre code,
@@ -401,12 +412,16 @@ html[data-theme="dark"] .post-content code {
     color: #f0a0c0;
 }
 
-/* 代码块——暗（统一） */
+/* 代码块——暗（外层深，内层微亮） */
 html[data-theme="dark"] .post-content .highlight,
 html[data-theme="dark"] .post-content pre,
 html[data-theme="dark"] .post-content .chroma {
-    background: #16161e;
+    background: #14141a;
     border-color: #2a2a35;
+}
+html[data-theme="dark"] .post-content .highlight .chroma,
+html[data-theme="dark"] .post-content pre .chroma {
+    background: #1a1a22;
 }
 html[data-theme="dark"] .post-content .highlight code,
 html[data-theme="dark"] .post-content pre code,
