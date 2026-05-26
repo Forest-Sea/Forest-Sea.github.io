@@ -1,6 +1,6 @@
 baseURL = 'https://forest-sea.github.io/'
 locale = 'zh-cn'
-title = '我的博客'
+title = 'Forest-Sea 的博客'
 theme = 'PaperMod'
 
 buildFuture = true
@@ -11,17 +11,20 @@ buildFuture = true
 [params]
   mainSections = ["posts"]
   ShowAllPagesInArchive = true
-
   ShowReadingTime = true
   ShowShareButtons = true
   ShowBreadCrumbs = true
   ShowPostNavLinks = true
   ShowToc = true
   ShowCodeCopyButtons = true
+  ShowFullTextinHomeView = false
+
+  defaultTheme = "auto"
+  disableThemeToggle = false
 
   [params.homeInfoParams]
-    Title = "你好，欢迎来到我的博客"
-    Content = "这是我用 Hugo 搭建的个人博客，主要记录学习笔记和日常发现。"
+    Title = "Forest-Sea"
+    Content = "从零开始学网络安全。记录学习笔记、工具使用和成长过程。"
 
 [[menu.main]]
   identifier = "archives"
