@@ -176,12 +176,16 @@ body {
 
 /* ===== 代码块 ===== */
 .post-content pre {
-    border-radius: var(--radius-sm);
+    border-radius: 4px;
     padding: 18px 22px;
     font-size: .88rem;
     line-height: 1.65;
     overflow-x: auto;
     background: #f8f8fa;
+}
+
+.post-content pre * {
+    border-radius: 0 !important;
 }
 
 .post-content pre code {
