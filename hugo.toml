@@ -5,6 +5,10 @@ theme = 'PaperMod'
 
 buildFuture = true
 
+[markup]
+  [markup.highlight]
+    noclasses = false
+
 [pagination]
   pagerSize = 10
 
@@ -28,7 +32,7 @@ buildFuture = true
 
 [[menu.main]]
   identifier = "archives"
-  name = "文章"
+  name = "博客文章"
   url = "/archives/"
   weight = 10
 
