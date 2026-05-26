@@ -184,23 +184,23 @@ body {
     font-size: .88rem;
     line-height: 1.65;
     overflow-x: auto;
-    background: #f6f8fa;
-    border: 1px solid #d8dee4;
+    background: #eef0f4;
+    border: 1px solid #dde0e6;
     margin: 1em 0;
 }
 
-/* 内部全部透明，不抢戏 */
+/* 内部尖角+透明背景 */
 .post-content .highlight *,
 .post-content pre *,
 .post-content .chroma * {
+    border-radius: 0 !important;
     background: transparent !important;
 }
 
 /* 代码文字 */
 .post-content .highlight code,
 .post-content pre code,
-.post-content .chroma code,
-.post-content code[class*="language"] {
+.post-content .chroma code {
     padding: 0;
     font-weight: 400;
     color: #24292f;
@@ -211,8 +211,8 @@ body {
 html:not([data-theme="dark"]) .post-content .highlight,
 html:not([data-theme="dark"]) .post-content pre,
 html:not([data-theme="dark"]) .post-content .chroma {
-    background: #f6f8fa !important;
-    border-color: #d8dee4 !important;
+    background: #eef0f4 !important;
+    border-color: #dde0e6 !important;
 }
 html:not([data-theme="dark"]) .post-content .highlight code,
 html:not([data-theme="dark"]) .post-content pre code,
