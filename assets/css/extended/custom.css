@@ -188,7 +188,7 @@ body {
     margin: 1em 0;
 }
 
-/* 内层——pre>code 或 chroma，尖角，比外层亮 */
+/* 内层——pre>code 或 chroma，尖角，比外层亮，统一左侧缩进 */
 .post-content .highlight > code,
 .post-content .highlight > pre > code,
 .post-content pre > code,
@@ -196,7 +196,7 @@ body {
     display: block;
     border-radius: 0 !important;
     background: #fafafc !important;
-    padding: 0;
+    padding: 0 0 0 4px;
 }
 
 /* chroma 内部 span 全尖角 */
