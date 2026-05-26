@@ -24,7 +24,7 @@ buildFuture = true
   ShowCodeCopyButtons = true
   ShowFullTextinHomeView = false
 
-  defaultTheme = "auto"
+  defaultTheme = "light"
   disableThemeToggle = false
 
   [params.homeInfoParams]

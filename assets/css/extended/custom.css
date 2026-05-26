@@ -176,22 +176,30 @@ body {
 
 /* ===== 代码块 ===== */
 .post-content pre {
-    border-radius: 4px;
+    border-radius: 3px;
     padding: 18px 22px;
     font-size: .88rem;
     line-height: 1.65;
     overflow-x: auto;
-    background: #f8f8fa;
+    background: #f8f8fa !important;
 }
 
-.post-content pre * {
-    border-radius: 0 !important;
+/* 内部 chroma 盒子用极小圆角，不遮挡代码 */
+.post-content pre .chroma {
+    border-radius: 2px;
 }
 
 .post-content pre code {
-    background: none;
+    background: none !important;
     padding: 0;
     font-weight: 400;
+}
+
+/* 白天强制代码块亮色 */
+html:not([data-theme="dark"]) .post-content pre,
+html:not([data-theme="dark"]) .post-content pre .chroma {
+    background: #f8f8fa !important;
+    color: #24292f;
 }
 
 /* ===== 表格 ===== */
@@ -370,11 +378,13 @@ html[data-theme="dark"] .post-content code {
 }
 
 /* 代码块——暗 */
-html[data-theme="dark"] .post-content pre {
-    background: #1a1a24;
+html[data-theme="dark"] .post-content pre,
+html[data-theme="dark"] .post-content pre .chroma {
+    background: #1a1a24 !important;
+    color: #c9d1d9;
 }
 html[data-theme="dark"] .post-content pre code {
-    background: none;
+    background: none !important;
 }
 
 /* 链接——暗 */
