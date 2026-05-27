@@ -80,9 +80,11 @@ html[data-theme="dark"] .logo a::before { content: '🔐 '; }
 html[data-theme="dark"] #menu a:hover { color: #fff; background: var(--card); }
 #menu .active,
 #menu a[aria-current] {
-    color: #fff !important;
+    color: #000 !important;
     background: var(--accent) !important;
     font-weight: 700;
+    text-decoration: none !important;
+    border-bottom: none !important;
 }
 
 /* 主题切换按钮 */
