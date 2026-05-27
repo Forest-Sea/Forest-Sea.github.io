@@ -107,27 +107,20 @@ html[data-theme="dark"] .menu a:hover {
     background: rgba(255,255,255,.04) !important;
 }
 
-/* 选中态 — 框变绿（PaperMod用span.active，需选父a） */
+/* 选中态 — 矩形框变绿 */
 #menu a:has(.active),
-.menu a:has(.active),
-#menu a[aria-current],
-.menu a[aria-current] {
-    color: var(--text) !important;
+.menu a:has(.active) {
     background: transparent !important;
-    border-color: #16a34a !important;
+    border: 1.5px solid #16a34a !important;
     font-weight: 700 !important;
-    text-decoration: none !important;
 }
-#menu .active,
-.menu .active {
+#menu .active {
     text-decoration: none !important;
-    font-weight: 700 !important;
-    color: inherit !important;
+    font-weight: 700;
 }
 html[data-theme="dark"] #menu a:has(.active),
 html[data-theme="dark"] .menu a:has(.active) {
     border-color: var(--accent) !important;
-    color: #fff !important;
 }
 
 /* 主题切换 */
@@ -419,7 +412,11 @@ html[data-theme="dark"] .post-content blockquote { background: rgba(57,211,83,.0
     border-radius: var(--radius); padding: 14px 18px;
     text-decoration: none; color: var(--text2); font-size: .85rem; transition: all .2s;
 }
-.paginav a:hover { border-color: var(--accent2); }
+.paginav a:hover {
+    border-color: var(--accent2);
+    color: var(--text);
+    background: var(--surface);
+}
 
 /* ===== 页脚 ===== */
 .footer {
