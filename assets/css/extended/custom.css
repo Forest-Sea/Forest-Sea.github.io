@@ -80,7 +80,7 @@ body {
 }
 #menu li { margin: 0; }
 
-/* 导航按钮 — 像素级复刻 hacker */
+/* 导航按钮 */
 #menu a,
 .menu a {
     color: var(--text2) !important;
@@ -94,13 +94,12 @@ body {
     background: transparent !important;
 }
 
-/* Hover — 边框浮现 */
+/* Hover — 灰色框浮现 */
 #menu a:hover,
 .menu a:hover {
     color: var(--text) !important;
     background: rgba(128,128,128,.06) !important;
     border-color: var(--border) !important;
-    text-decoration: none !important;
 }
 html[data-theme="dark"] #menu a:hover,
 html[data-theme="dark"] .menu a:hover {
@@ -108,21 +107,20 @@ html[data-theme="dark"] .menu a:hover {
     background: rgba(255,255,255,.04) !important;
 }
 
-/* 选中态 — 绿底黑字，无下划线 */
+/* 选中态 — 框变绿，文字不变 */
 #menu .active,
 .menu .active,
 #menu a[aria-current],
 .menu a[aria-current] {
-    color: #000 !important;
-    background: #16a34a !important;
+    color: var(--text) !important;
+    background: transparent !important;
+    border-color: var(--accent) !important;
     font-weight: 700 !important;
     text-decoration: none !important;
-    border: 1px solid #16a34a !important;
 }
 html[data-theme="dark"] #menu .active,
 html[data-theme="dark"] .menu .active {
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
+    color: #fff !important;
 }
 
 /* 主题切换 */

@@ -1,4 +1,4 @@
-baseURL = 'https://forest-sea.github.io/'
+baseURL = 'https://forest-sea-blog.pages.dev/'
 locale = 'zh-cn'
 title = 'Forest-Sea 的博客'
 theme = 'PaperMod'
