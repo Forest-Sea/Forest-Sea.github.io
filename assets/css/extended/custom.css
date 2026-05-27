@@ -107,20 +107,27 @@ html[data-theme="dark"] .menu a:hover {
     background: rgba(255,255,255,.04) !important;
 }
 
-/* 选中态 — 矩形框变绿 */
+/* 选中态 — 整个矩形变绿填充 */
 #menu a:has(.active),
 .menu a:has(.active) {
-    background: transparent !important;
-    border: 1.5px solid #16a34a !important;
+    color: #000 !important;
+    background: #16a34a !important;
+    border-color: #16a34a !important;
     font-weight: 700 !important;
 }
 #menu .active {
     text-decoration: none !important;
     font-weight: 700;
+    color: #000 !important;
 }
 html[data-theme="dark"] #menu a:has(.active),
 html[data-theme="dark"] .menu a:has(.active) {
+    color: #000 !important;
+    background: var(--accent) !important;
     border-color: var(--accent) !important;
+}
+html[data-theme="dark"] #menu .active {
+    color: #000 !important;
 }
 
 /* 主题切换 */
@@ -178,14 +185,19 @@ html[data-theme="dark"] .menu a:has(.active) {
     border-top: 1px solid var(--border);
 }
 
-/* ===== 标签 ===== */
+/* ===== 标签按钮 ===== */
 .post-tags a, .terms-tags a {
-    display: inline-block; padding: 2px 8px;
-    border-radius: 4px; font-size: .72rem;
-    margin: 2px 3px; text-decoration: none; font-weight: 500;
+    display: inline-block; padding: 4px 10px;
+    border-radius: 4px; font-size: .75rem;
+    margin: 2px 4px; text-decoration: none; font-weight: 600;
     background: var(--accent2); color: #fff;
+    border: 1px solid transparent;
+    transition: all .2s;
 }
-.post-tags a:hover, .terms-tags a:hover { filter: brightness(1.2); }
+.post-tags a:hover, .terms-tags a:hover {
+    opacity: .85;
+    transform: translateY(-1px);
+}
 
 /* ===== 文章内页 ===== */
 .post-header {
