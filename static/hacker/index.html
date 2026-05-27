@@ -27,10 +27,15 @@ header {
 .logo span { color:var(--accent); }
 .nav { display:flex; gap:2px; flex-wrap:wrap; }
 .nav a {
-  color:var(--text2); text-decoration:none; padding:5px 12px;
-  border-radius:6px; font-size:.85em; transition:.2s;
+  color:var(--text2); text-decoration:none; padding:7px 15px;
+  border-radius:8px; font-size:.84em; font-weight:500;
+  transition:all .25s; border:1px solid transparent;
 }
-.nav a:hover, .nav a.active { color:#fff; background:var(--card); }
+.nav a:hover { color:#fff; background:rgba(255,255,255,.04); border-color:var(--border); }
+.nav a.active { color:#000; background:var(--accent); font-weight:700; box-shadow:0 2px 12px rgba(57,211,83,.3); border-color:var(--accent); }
+.back-link { margin-left:8px; }
+.back-link a { font-size:.8em; padding:5px 12px; border:1px solid var(--border); border-radius:6px; color:var(--text2); text-decoration:none; transition:.2s; }
+.back-link a:hover { border-color:var(--accent2); color:var(--accent2); }
 main { max-width:1300px; margin:0 auto; padding:16px 20px; }
 .card {
   background:var(--card); border:1px solid var(--border);
@@ -170,6 +175,7 @@ textarea { resize:vertical; min-height:70px; }
 <header>
   <div class="logo">🔐 Hacker <span>Hub</span></div>
   <nav class="nav" id="nav">
+    <span class="back-link"><a href="/">← 博客</a></span>
     <a href="#home" class="active" onclick="showSection('home')">🏠 首页</a>
     <a href="#beginner" onclick="showSection('beginner')">🌱 0基础</a>
     <a href="#postgrad" onclick="showSection('postgrad')">📚 考研</a>
