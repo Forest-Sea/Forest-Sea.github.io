@@ -38,12 +38,6 @@ buildFuture = true
   weight = 10
 
 [[menu.main]]
-  identifier = "hacker"
-  name = "网络安全"
-  url = "/hacker/"
-  weight = 15
-
-[[menu.main]]
   identifier = "tags"
   name = "标签"
   url = "/tags/"
@@ -54,3 +48,9 @@ buildFuture = true
   name = "搜索"
   url = "/search/"
   weight = 30
+
+[[menu.main]]
+  identifier = "hacker"
+  name = "网络安全"
+  url = "/hacker/"
+  weight = 40

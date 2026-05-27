@@ -108,7 +108,7 @@ html[data-theme="dark"] .menu a:hover {
     background: rgba(255,255,255,.04) !important;
 }
 
-/* 选中态 — 绿底黑字+发光，无下划线 */
+/* 选中态 — 绿底黑字，无下划线 */
 #menu .active,
 .menu .active,
 #menu a[aria-current],
@@ -117,18 +117,12 @@ html[data-theme="dark"] .menu a:hover {
     background: #16a34a !important;
     font-weight: 700 !important;
     text-decoration: none !important;
-    border-radius: 8px !important;
     border: 1px solid #16a34a !important;
-    box-shadow: 0 2px 12px rgba(22,163,74,.3) !important;
 }
 html[data-theme="dark"] #menu .active,
-html[data-theme="dark"] .menu .active,
-html[data-theme="dark"] #menu a[aria-current],
-html[data-theme="dark"] .menu a[aria-current] {
-    color: #000 !important;
+html[data-theme="dark"] .menu .active {
     background: var(--accent) !important;
     border-color: var(--accent) !important;
-    box-shadow: 0 2px 12px rgba(57,211,83,.3) !important;
 }
 
 /* 主题切换 */
