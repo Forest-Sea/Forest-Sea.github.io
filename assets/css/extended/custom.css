@@ -202,20 +202,40 @@ html[data-theme="dark"] .post-content :not(pre) > code {
     border: 1px solid var(--border);
 }
 
-/* 代码块 — 白天强制亮色 */
+/* ===== 代码块 ===== */
 .post-content .highlight,
 .post-content pre,
-.post-content .chroma {
+.post-content .chroma,
+.post-content div.highlight,
+.post-content table.lntable {
     border-radius: var(--radius); padding: 16px;
     font-size: .84rem; line-height: 1.6;
     overflow-x: auto; margin: 1.2em 0;
     font-family: var(--mono);
-    background: #f6f8fa !important;
-    border: 1px solid #e2e5ea !important;
-    color: #24292f !important;
 }
 
-/* 深色覆盖 */
+/* 白天 — 强制亮底，覆盖所有情况 */
+html:not([data-theme="dark"]) .post-content .highlight,
+html:not([data-theme="dark"]) .post-content div.highlight,
+html:not([data-theme="dark"]) .post-content pre,
+html:not([data-theme="dark"]) .post-content .chroma,
+html:not([data-theme="dark"]) .post-content table.lntable,
+html:not([data-theme="dark"]) .post-content .highlight .chroma,
+html:not([data-theme="dark"]) .post-content pre code,
+html:not([data-theme="dark"]) .post-content .chroma code,
+html:not([data-theme="dark"]) .post-content .highlight .lntd,
+html:not([data-theme="dark"]) .post-content .highlight .ln,
+html:not([data-theme="dark"]) .post-content .highlight .lnt,
+html:not([data-theme="dark"]) .post-content .highlight span {
+    background: #f6f8fa !important;
+    color: #24292f !important;
+}
+html:not([data-theme="dark"]) .post-content .highlight,
+html:not([data-theme="dark"]) .post-content pre {
+    border: 1px solid #e2e5ea !important;
+}
+
+/* 深色 */
 html[data-theme="dark"] .post-content .highlight,
 html[data-theme="dark"] .post-content pre,
 html[data-theme="dark"] .post-content .chroma {
@@ -223,28 +243,26 @@ html[data-theme="dark"] .post-content .chroma {
     border: 1px solid var(--border) !important;
     color: var(--text) !important;
 }
-
-/* 内部元素全透明尖角 */
-.post-content .highlight *,
-.post-content pre *,
-.post-content .chroma * {
-    border-radius: 0 !important;
+html[data-theme="dark"] .post-content .highlight *,
+html[data-theme="dark"] .post-content pre * {
     background: transparent !important;
-}
-
-/* 代码文字 */
-.post-content .highlight code,
-.post-content pre code,
-.post-content .chroma code {
-    padding: 0; font-family: var(--mono); font-size: inherit;
-}
-:root .post-content pre code,
-:root .post-content .highlight code {
-    color: #24292f !important;
 }
 html[data-theme="dark"] .post-content pre code,
 html[data-theme="dark"] .post-content .highlight code {
     color: var(--text) !important;
+}
+
+/* 尖角 */
+.post-content .highlight *,
+.post-content pre *,
+.post-content .chroma * {
+    border-radius: 0 !important;
+}
+
+/* 代码文字基础 */
+.post-content pre code,
+.post-content .highlight code {
+    padding: 0; font-family: var(--mono); font-size: inherit;
 }
 
 /* 表格 */
