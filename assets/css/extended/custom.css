@@ -198,13 +198,42 @@ body {
     filter: brightness(1.3);
 }
 
-/* ===== 文章内页 ===== */
-.post-header h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text);
+/* ===== 文章内页 — Card 风格 ===== */
+.post-header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
 }
+.post-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent2);
+    line-height: 1.35;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.post-meta {
+    color: var(--text2);
+    font-size: .82rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
 .post-content {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    box-shadow: var(--shadow);
     font-size: .95rem;
     line-height: 1.8;
     color: var(--text);
@@ -215,17 +244,33 @@ body {
 }
 .post-content h2 {
     font-size: 1.2rem;
-    margin-top: 2em;
-    padding-bottom: .3em;
+    margin: 2em 0 .6em;
+    padding-bottom: .4em;
     border-bottom: 1px solid var(--border);
 }
-.post-content h3 { font-size: 1.05rem; margin-top: 1.5em; }
+.post-content h2::before { content: '▸ '; color: var(--accent); }
+.post-content h3 {
+    font-size: 1.05rem;
+    margin-top: 1.6em;
+    color: var(--accent);
+}
 .post-content p { margin-bottom: 1em; }
 .post-content a {
     color: var(--accent2);
     text-decoration: none;
 }
 .post-content a:hover { text-decoration: underline; }
+
+/* 文章底部标签区 */
+.post-footer {
+    margin-top: 24px;
+}
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 16px;
+}
 
 /* 行内代码 */
 .post-content :not(pre) > code {

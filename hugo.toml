@@ -44,12 +44,6 @@ buildFuture = true
   weight = 15
 
 [[menu.main]]
-  identifier = "jiese"
-  name = "戒色"
-  url = "/jiese/"
-  weight = 17
-
-[[menu.main]]
   identifier = "tags"
   name = "标签"
   url = "/tags/"
