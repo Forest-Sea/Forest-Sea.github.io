@@ -80,46 +80,55 @@ body {
 }
 #menu li { margin: 0; }
 
-/* 导航按钮 — 和 hacker 一模一样 */
-#menu a {
-    color: var(--text2);
-    text-decoration: none;
-    padding: 7px 15px;
-    border-radius: 8px;
-    font-size: .84rem;
-    font-weight: 500;
-    transition: all .25s;
-    border: 1px solid transparent;
+/* 导航按钮 — 像素级复刻 hacker */
+#menu a,
+.menu a {
+    color: var(--text2) !important;
+    text-decoration: none !important;
+    padding: 7px 15px !important;
+    border-radius: 8px !important;
+    font-size: .84rem !important;
+    font-weight: 500 !important;
+    transition: all .25s !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
 }
 
-/* Hover */
-#menu a:hover {
-    color: var(--text);
-    background: rgba(128,128,128,.06);
-    border-color: var(--border);
+/* Hover — 边框浮现 */
+#menu a:hover,
+.menu a:hover {
+    color: var(--text) !important;
+    background: rgba(128,128,128,.06) !important;
+    border-color: var(--border) !important;
+    text-decoration: none !important;
 }
-html[data-theme="dark"] #menu a:hover {
-    color: #fff;
-    background: rgba(255,255,255,.04);
+html[data-theme="dark"] #menu a:hover,
+html[data-theme="dark"] .menu a:hover {
+    color: #fff !important;
+    background: rgba(255,255,255,.04) !important;
 }
 
-/* 选中态 — 完全复刻 hacker：绿底黑字+发光 */
+/* 选中态 — 绿底黑字+发光，无下划线 */
 #menu .active,
-#menu a[aria-current] {
+.menu .active,
+#menu a[aria-current],
+.menu a[aria-current] {
     color: #000 !important;
     background: #16a34a !important;
-    font-weight: 700;
+    font-weight: 700 !important;
     text-decoration: none !important;
-    border-radius: 8px;
-    border-color: #16a34a !important;
-    box-shadow: 0 2px 12px rgba(22,163,74,.3);
+    border-radius: 8px !important;
+    border: 1px solid #16a34a !important;
+    box-shadow: 0 2px 12px rgba(22,163,74,.3) !important;
 }
 html[data-theme="dark"] #menu .active,
-html[data-theme="dark"] #menu a[aria-current] {
+html[data-theme="dark"] .menu .active,
+html[data-theme="dark"] #menu a[aria-current],
+html[data-theme="dark"] .menu a[aria-current] {
     color: #000 !important;
     background: var(--accent) !important;
     border-color: var(--accent) !important;
-    box-shadow: 0 2px 12px rgba(57,211,83,.3);
+    box-shadow: 0 2px 12px rgba(57,211,83,.3) !important;
 }
 
 /* 主题切换 */
