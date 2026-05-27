@@ -107,19 +107,26 @@ html[data-theme="dark"] .menu a:hover {
     background: rgba(255,255,255,.04) !important;
 }
 
-/* 选中态 — 框变绿，文字不变 */
-#menu .active,
-.menu .active,
+/* 选中态 — 框变绿（PaperMod用span.active，需选父a） */
+#menu a:has(.active),
+.menu a:has(.active),
 #menu a[aria-current],
 .menu a[aria-current] {
     color: var(--text) !important;
     background: transparent !important;
-    border-color: var(--accent) !important;
+    border-color: #16a34a !important;
     font-weight: 700 !important;
     text-decoration: none !important;
 }
-html[data-theme="dark"] #menu .active,
-html[data-theme="dark"] .menu .active {
+#menu .active,
+.menu .active {
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    color: inherit !important;
+}
+html[data-theme="dark"] #menu a:has(.active),
+html[data-theme="dark"] .menu a:has(.active) {
+    border-color: var(--accent) !important;
     color: #fff !important;
 }
 
@@ -387,7 +394,6 @@ html[data-theme="dark"] .post-content blockquote { background: rgba(57,211,83,.0
     font-size: .78rem; color: var(--text2);
     white-space: nowrap; margin-left: 12px;
 }
-.archive-entry .entry-link { display: none; }
 
 /* 汇总统计 */
 .archive-year-header sup {
